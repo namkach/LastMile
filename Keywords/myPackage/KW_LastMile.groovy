@@ -21,6 +21,7 @@ public class KW_LastMile {
 
 	def findOrder(String order_id, String store_id, String payment_type, Integer status_id) {
 		checkOrder = findOrderId(order_id, store_id, payment_type, status_id)
+		KeywordUtil.logInfo('checkOrder : ' + checkOrder)
 		while(!checkOrder) {
 			swipeUp()
 			checkOrder = findOrderId(order_id, store_id, payment_type, status_id)
@@ -38,21 +39,22 @@ public class KW_LastMile {
 	}
 
 	def findOrderId(String order_id, String store_id, String payment_type, Integer status_id) {
-		//		checkOrder = false
-		//		List<MobileElement> products = driver.findElementsByClassName('android.view.View')
-		//		def sizes = products.size().toString()
-		//		KeywordUtil.logInfo(sizes)
-		//		for (int i = 0; i <= products.size(); i++) {
-		//			KeywordUtil.logInfo(products.get(i).getText())
-		//			if (products.get(i).getText().contains(order_id)) {
-		//				products.get(i).click()
+		//				checkOrder = false
+		List<MobileElement> products = driver.findElementsByClassName('android.view.View')
+		def sizes = products.size().toString()
+		KeywordUtil.logInfo(sizes)
+		for (int i = 0; i < products.size(); i++) {
+			KeywordUtil.logInfo(products.get(i).getText())
+			if (products.get(i).getText().contains(order_id)) {
+				products.get(i).click()
+				return true
+				//						checkOrder = true
+				//						break
+			}
+		}
+		//		findElementToClick('android.view.View',order_id)
+		//		return true
 		//				checkOrder = true
-		//				break
-		//			}
-		//		}
-		findElementToClick('android.view.View',order_id)
-		return true
-		//		checkOrder = true
 
 
 		//		List<MobileElement> orders = driver.findElementsById(riderId + 'txt_order_no')
@@ -88,7 +90,8 @@ public class KW_LastMile {
 		//				break
 		//			}
 		//		}
-		//		return checkOrder
+		return false
+		//				return checkOrder
 	}
 
 	def swipeUp() {
@@ -162,22 +165,40 @@ public class KW_LastMile {
 	}
 
 	def checkAllProducts(Double countTotalPrice, Double totalPrice, Integer countQty, Integer status_id) {
+		int qty
+		double price
 		///////////////////////////////////////////////////////////////////
-		MobileElement allTotalPrice = (MobileElement) driver.findElementById(riderId + 'order_detail_tv_total_price')
-		MobileElement allQty = (MobileElement) driver.findElementById(riderId + 'order_detail_tv_total_list')
+		//		MobileElement allTotalPrice = (MobileElement) driver.findElementById(riderId + 'order_detail_tv_total_price')
+		//		MobileElement allQty = (MobileElement) driver.findElementById(riderId + 'order_detail_tv_total_list')
 
-		double numAllTotalPrice = 0.00
-		if (allTotalPrice.getText().contains('บาท')) {
-			numAllTotalPrice = Double.parseDouble(allTotalPrice.getText().replace(' บาท',''))
-		} else {
-			numAllTotalPrice = Double.parseDouble(allTotalPrice.getText())
+		List<MobileElement> allTotalPrice = driver.findElementsById('android.view.View')
+		for (int i = 0; i < allTotalPrice.size(); i++) {
+			if (allTotalPrice.get(i).getText().contains('บาท')) {
+				KeywordUtil.logInfo(allTotalPrice.get(i).getText())
+				price = Double.parseDouble(allTotalPrice.get(i).getText().replace(' บาท',''))
+			}
 		}
+
+		List<MobileElement> productQty = driver.findElementsById('android.view.View')
+		for (int j = 0; j < productQty.size(); j++) {
+			if (productQty.get(j).getText().contains('ยอดสุทธิ')) {
+				KeywordUtil.logInfo(productQty.get(j).getText())
+				qty = extractInt(productQty.get(j).getText())
+			}
+		}
+
+		//		double numAllTotalPrice = 0.00
+		//		if (allTotalPrice.getText().contains('บาท')) {
+		//			numAllTotalPrice = Double.parseDouble(allTotalPrice.getText().replace(' บาท',''))
+		//		} else {
+		//			numAllTotalPrice = Double.parseDouble(allTotalPrice.getText())
+		//		}
 		//		printType(numAllTotalPrice)
-		KeywordUtil.logInfo ('total price : ' + numAllTotalPrice)
-		KeywordUtil.logInfo ('All QTY : ' + extractInt(allQty.getText()))
-		if (numAllTotalPrice.equals(countTotalPrice)) {
-			assert numAllTotalPrice.equals(totalPrice)
-			assert extractInt(allQty.getText()).equals(countQty)
+		KeywordUtil.logInfo ('total price : ' + price)
+		KeywordUtil.logInfo ('All QTY : ' + qty)
+		if (price.equals(countTotalPrice)) {
+			assert price.equals(totalPrice)
+			assert qty.equals(countQty)
 			status = ''
 			remark = ''
 		} else {

@@ -19,7 +19,7 @@ import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 import internal.GlobalVariable as GlobalVariable
 
-def path = 'D:\\Users\\sunitakac\\Desktop\\apk\\last_mile_v_0.0.6.apk'
+def path = 'D:\\Users\\sunitakac\\Desktop\\apk\\lastMile\\last_mile_v_0.0.8.apk'
 def status = ''
 def remark = '-'
 
@@ -61,10 +61,10 @@ try {
 	Double[] productUnitPrice = [unit_price1, unit_price2, unit_price3]
 	
 	KeywordUtil.logInfo('----- new order -----')
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
+	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
+	if (status.equals('Fail')) {
+		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
+	}
 	
 //	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
 //	if (status.equals('Fail')) {
@@ -126,24 +126,24 @@ try {
 //	}
 	
 	
-	status_id = 4
-	
-	KeywordUtil.logInfo('----- Processing -----')
-	List<MobileElement> tabs = driver.findElementsByClassName('android.widget.ImageView')
-	for (int i = 0; i <= tabs.size(); i++) {
-		if (tabs.get(i).getText().contains('กำลังดำเนินการ')) {
-			tabs.get(i).click()
-			break
-		}
-	}
-	
-	
-	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
-	if (status.equals('Fail')) {
-		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
-	}
-
-	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, price) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
+//	status_id = 4
+//	
+//	KeywordUtil.logInfo('----- Processing -----')
+//	List<MobileElement> tabs = driver.findElementsByClassName('android.widget.ImageView')
+//	for (int i = 0; i <= tabs.size(); i++) {
+//		if (tabs.get(i).getText().contains('กำลังดำเนินการ')) {
+//			tabs.get(i).click()
+//			break
+//		}
+//	}
+//	
+//	
+//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
+//	if (status.equals('Fail')) {
+//		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
+//	}
+//
+//	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, price) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
 //	
 //	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
 //	if (status.equals('Fail')) {
@@ -200,13 +200,13 @@ try {
 //		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
 //	}
 	
-	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, price)
-	KeywordUtil.logInfo('status_id : ' + status_id)
-	if (status.equals('Fail')) {
-		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
-	}
-	
-	Mobile.delay(3)
+//	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, price)
+//	KeywordUtil.logInfo('status_id : ' + status_id)
+//	if (status.equals('Fail')) {
+//		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
+//	}
+//	
+//	Mobile.delay(3)
 	
 //	KeywordUtil.logInfo('----- Processed -----')
 //	List<MobileElement> tabs2 = driver.findElementsByClassName('android.widget.ImageView')
