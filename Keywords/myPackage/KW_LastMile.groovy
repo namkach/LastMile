@@ -1,5 +1,7 @@
 package myPackage
 
+import java.awt.RenderingHints.Key
+
 import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.mobile.keyword.internal.MobileDriverFactory
 import com.kms.katalon.core.util.KeywordUtil
@@ -45,11 +47,11 @@ public class KW_LastMile {
 		for (int i = 0; i < products.size(); i++) {
 			KeywordUtil.logInfo(products.get(i).getText())
 			if (products.get(i).getText().contains(order_id)) {
-				String[] texts = products.get(i).getText().trim().split('\\r?\\n')
+				String[] texts = products.get(i).getText().split('\\r?\\n')
 				//check text array
-//				for (int j = 0; j < texts.size(); j++) {
-//					KeywordUtil.logInfo('texts : ' + texts[j])
-//				}
+				//				for (int j = 0; j < texts.size(); j++) {
+				//					KeywordUtil.logInfo('texts : ' + texts[j])
+				//				}
 				assert texts[1].contains(store_id)
 				products.get(i).click()
 				return true
@@ -94,6 +96,7 @@ public class KW_LastMile {
 	}
 
 	def swipeUp() {
+		KeywordUtil.logInfo('== Swipe ==')
 		int x = Mobile.getDeviceWidth()/2
 		int startY = Mobile.getDeviceHeight()*0.7
 		int endY = Mobile.getDeviceHeight()*0.4
@@ -101,66 +104,91 @@ public class KW_LastMile {
 	}
 
 	def checkTotalProducts(String flow_type, Integer total_product, Integer status_id) {
-		///////////////////////////////////////////////////////////
-		List<MobileElement> prods = driver.findElementsById(riderId + 'row_order_detail_tv_name')
-		println ('Product size : ' + prods.size())
-		println ('Total product : ' + total_product)
-		if (flow_type.equals('2')) {
-			total_product += 1
+		boolean statusText = false
+		def productText
+		int totalProduct
+		ArrayList<String> products = new ArrayList<String>()
+		List<MobileElement> listProducts = driver.findElementsByClassName('android.view.View')
+
+		for (int i = 0; i < listProducts.size(); i++) {
+			KeywordUtil.logInfo('products : ' + listProducts.get(i).getText())
+			productText = listProducts.get(i).getText()
+			KeywordUtil.logInfo('productText length : ' + productText.length())
+			if (productText.contains('ยอดสุทธิ')) {
+				statusText = false
+				totalProduct = extractInt(productText)
+				break
+			} else if (statusText && productText.length() > 0) {
+				products.add(productText)
+			} else if (productText.contains('หมายเหตุ')) {
+				statusText = true
+			}
 		}
+		
+		// check product list
+//		for (int j = 0; j < product.size(); j++) {
+//			KeywordUtil.logInfo('texts : ' + product.get(j))
+//		}
 
-		//		KeywordUtil.logInfo (printType(prods.size()))
-		//		KeywordUtil.logInfo (printType(total_product))
-
-		if (prods.size().equals(total_product)) {
-			KeywordUtil.logInfo ('true')
+		//		if (flow_type.equals('2')) {
+		//			total_product += 1
+		//		}
+		
+		if (totalProduct .equals(products.size())) {
+			assert totalProduct == total_product
+			KeywordUtil.logInfo ('Check total product --> Passed')
 			status = ''
 			remark = ''
 		} else {
-			KeywordUtil.logInfo ('false')
+			KeywordUtil.logInfo ('Check total product --> Failed')
 			status = 'Fail'
 			remark = 'Fail to check total products at status_id ' + status_id
-			KeywordUtil.markFailed(remark)
 		}
-		return [status, remark]
+		return [status, remark, products]
 	}
 
 	def checkEachProduct(String name, Integer qty, Double unitPrice, Integer countQty, Double countTotalPrice, Integer statusProduct, Integer status_id) {
-		List<MobileElement> prods = driver.findElementsById(riderId + 'row_order_detail_tv_name')
-		List<MobileElement> qtys = driver.findElementsById(riderId + 'row_order_detail_tv_amount')
-		List<MobileElement> prices = driver.findElementsById(riderId + 'row_order_detail_tv_price')
-
-		double totalPrice
-		int numQty
-		for (int k = 0; k < prods.size(); k++) {
-			if (prods.get(k).getText().equals(name)) {
-				KeywordUtil.logInfo ('check qty before ' + name + ' : ' + countQty)
-				numQty = extractInt(qtys.get(k).getText())
-				assert numQty.equals(qty)
-				switch (statusProduct) {
-					case 1:
-						totalPrice = Double.parseDouble(prices.get(k).getText())
-						break
-					case 2 :
-						totalPrice = Double.parseDouble(prices.get(k - 1).getText())
-						break
-				}
-
-				if (totalPrice.equals((qty * unitPrice))) {
-					countQty += qty
-					countTotalPrice += totalPrice
-					KeywordUtil.logInfo('countQty : ' + countQty)
-					KeywordUtil.logInfo('countTotalPrice : ' + countTotalPrice)
-					status = ''
-					remark = ''
-				} else {
-					status = 'Fail'
-					remark = 'Fail to check each product in order at status_id ' + status_id
-					KeywordUtil.markFailed(remark)
-				}
-				return [status, remark, countQty, countTotalPrice]
-			}
-		}
+			
+		
+		
+		
+		
+	
+//		List<MobileElement> prods = driver.findElementsById(riderId + 'row_order_detail_tv_name')
+//		List<MobileElement> qtys = driver.findElementsById(riderId + 'row_order_detail_tv_amount')
+//		List<MobileElement> prices = driver.findElementsById(riderId + 'row_order_detail_tv_price')
+//
+//		double totalPrice
+//		int numQty
+//		for (int k = 0; k < prods.size(); k++) {
+//			if (prods.get(k).getText().equals(name)) {
+//				KeywordUtil.logInfo ('check qty before ' + name + ' : ' + countQty)
+//				numQty = extractInt(qtys.get(k).getText())
+//				assert numQty.equals(qty)
+//				switch (statusProduct) {
+//					case 1:
+//						totalPrice = Double.parseDouble(prices.get(k).getText())
+//						break
+//					case 2 :
+//						totalPrice = Double.parseDouble(prices.get(k - 1).getText())
+//						break
+//				}
+//
+//				if (totalPrice.equals((qty * unitPrice))) {
+//					countQty += qty
+//					countTotalPrice += totalPrice
+//					KeywordUtil.logInfo('countQty : ' + countQty)
+//					KeywordUtil.logInfo('countTotalPrice : ' + countTotalPrice)
+//					status = ''
+//					remark = ''
+//				} else {
+//					status = 'Fail'
+//					remark = 'Fail to check each product in order at status_id ' + status_id
+//					KeywordUtil.markFailed(remark)
+//				}
+//				return [status, remark, countQty, countTotalPrice]
+//			}
+//		}
 	}
 
 	def checkAllProducts(Double countTotalPrice, Double totalPrice, Integer countQty, Integer status_id) {
@@ -217,6 +245,7 @@ public class KW_LastMile {
 			switch (status_id) {
 				case 3 :
 					if (ConfirmOrder.get(i).getText().contains('รับรายการคำสั่งซื้อ')) {
+						KeywordUtil.logInfo(ConfirmOrder.get(i).getText())
 						ConfirmOrder.get(i).click()
 						checkOrder = true
 						break
@@ -224,50 +253,19 @@ public class KW_LastMile {
 					break
 				case 4 :
 					if (ConfirmOrder.get(i).getText().contains('ชำระด้วยเงินสดสำเร็จ')) {
+						KeywordUtil.logInfo(ConfirmOrder.get(i).getText())
 						ConfirmOrder.get(i).click()
-						//						List<MobileElement> skipBtn = driver.findElementsByClassName('android.view.View')
-						//						for (int j = 0; j < skipBtn.size(); j++) {
-						//							if (skipBtn.get(j).getText().contains('ข้าม')) {
-						//								skipBtn.get(j).click()
-						//								break
-						//							}
-						//						}
+
 						findElementToClick('android.view.View','ข้าม')
 
-						//						List<MobileElement> deliveryType = driver.findElementsByClassName('android.view.View')
-						//						for (int k = 0; k < deliveryType.size(); k++) {
-						//							if (deliveryType.get(k).getText().contains('รถจักยานยนต์')) {
-						//								deliveryType.get(k).click()
-						//								break
-						//							}
-						//						}
-						findElementToClick('android.view.View','รถจักยานยนต์')
-
-						//						List<MobileElement> confirmDeli = driver.findElementsByClassName('android.widget.Button')
-						//						for (int l = 0; l < confirmDeli.size(); l++) {
-						//							if (confirmDeli.get(l).getText().contains('ตกลง')) {
-						//								confirmDeli.get(l).click()
-						//								break
-						//							}
-						//						}
 						findElementToClick('android.widget.Button','ตกลง')
 
-						List<MobileElement> confirmSign = driver.findElementsByClassName('android.view.View')
-						for (int m = 0; m < confirmSign.size(); m++) {
-							if (confirmSign.get(m).getText().contains('ตกลง')) {
-								swipeUp()
-								confirmSign.get(m).click()
-								//								List<MobileElement> confirmSignBtn = driver.findElementsByClassName('android.widget.Button')
-								//								for (int n = 0; n < confirmSignBtn.size(); n++) {
-								//									if (confirmSignBtn.get(n).getText().contains('ยืนยัน')) {
-								//										confirmSignBtn.get(n).click()
-								//										break
-								//									}
-								//								}
-								findElementToClick('android.widget.Button','ยืนยัน')
-								break
-							}
-						}
+						Mobile.delay(2)
+						swipeUp()
+						findElementToClick('android.view.View','ตกลง')
+						Mobile.delay(3)
+						findElementToClick('android.widget.Button','ยืนยัน')
+						Mobile.delay(2)
 						checkOrder = true
 						break
 					}
@@ -352,10 +350,14 @@ public class KW_LastMile {
 	}
 
 	def findElementToClick (String className, String text) {
-		List<MobileElement> skipBtn = driver.findElementsByClassName(className)
-		for (int j = 0; j < skipBtn.size(); j++) {
-			if (skipBtn.get(j).getText().contains(text)) {
-				skipBtn.get(j).click()
+		KeywordUtil.logInfo('=== find element to click ===> text is : ' + text)
+		List<MobileElement> btn = driver.findElementsByClassName(className)
+		KeywordUtil.logInfo('btn size : ' + btn.size())
+		for (int j = 0; j < btn.size(); j++) {
+			KeywordUtil.logInfo(btn.get(j).getText())
+			if (btn.get(j).getText() == text) {
+				KeywordUtil.logInfo('click : ' + btn.get(j).getText())
+				btn.get(j).click()
 				break
 			}
 		}

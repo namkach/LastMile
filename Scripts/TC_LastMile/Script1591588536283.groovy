@@ -23,6 +23,7 @@ def path = 'D:\\Users\\sunitakac\\Desktop\\apk\\lastMile\\last_mile_v_0.0.8.apk'
 def status = ''
 def remark = '-'
 
+def name
 int status_id = 3
 int qty = 0
 double unitPrice = 0.00
@@ -36,7 +37,7 @@ try {
     Mobile.startApplication(path, true)
 
     AppiumDriver<MobileElement> driver = MobileDriverFactory.getDriver()
-    Mobile.delay(8)
+    Mobile.delay(1)
 
     MobileElement cpBtn = driver.findElementByClassName('android.widget.Button')
     cpBtn.click()
@@ -60,12 +61,14 @@ try {
 	Integer[] productQty = [qty1, qty2, qty3]
 	Double[] productUnitPrice = [unit_price1, unit_price2, unit_price3]
 	
-	KeywordUtil.logInfo('----- new order -----')
-	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
-	if (status.equals('Fail')) {
-		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-	}
+	ArrayList<String> productList = new ArrayList<String>()
 	
+//	KeywordUtil.logInfo('----- new order -----')
+//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
+//	if (status.equals('Fail')) {
+//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
+//	}
+//	
 //	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
 //	if (status.equals('Fail')) {
 //		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
@@ -126,30 +129,42 @@ try {
 //	}
 	
 	
-//	status_id = 4
-//	
-//	KeywordUtil.logInfo('----- Processing -----')
-//	List<MobileElement> tabs = driver.findElementsByClassName('android.widget.ImageView')
-//	for (int i = 0; i <= tabs.size(); i++) {
-//		if (tabs.get(i).getText().contains('กำลังดำเนินการ')) {
-//			tabs.get(i).click()
-//			break
-//		}
-//	}
-//	
-//	
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
-//	}
-//
-//	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, price) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
-//	
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
-//	}
-//	
+	status_id = 4
+	
+	KeywordUtil.logInfo('----- Processing -----')
+	List<MobileElement> tabs = driver.findElementsByClassName('android.widget.ImageView')
+	for (int i = 0; i <= tabs.size(); i++) {
+		if (tabs.get(i).getText().contains('กำลังดำเนินการ')) {
+			tabs.get(i).click()
+			break
+		}
+	}
+	
+	
+	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
+	if (status.equals('Fail')) {
+		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
+	}
+
+	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, price) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
+	
+	(status, remark, productList) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
+	if (status.equals('Fail')) {
+		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
+	}
+	
+	for (int i = 0; i < productList.size(); i++) {
+		KeywordUtil.logInfo(productList.get(i))
+		String[] product = productList.get(i).split('\\r?\\n')
+		name = product[0]
+		qty = CustomKeywords.'myPackage.KW_LastMile.extractInt'(product[1])
+		unitPrice = Double.parseDouble(product[2])
+		KeywordUtil.logInfo(name)
+		KeywordUtil.logInfo(qty.toString())
+		KeywordUtil.logInfo(unitPrice.toString())
+		(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(name, qty, unitPrice, countQty, countTotalPrice, statusProduct, status_id)
+	}
+	
 //	products = driver.findElementsById(riderId + 'row_order_detail_tv_name')
 //	for(int i = 0; i < products.size(); i++) {
 //		for (int j = 0; j < productName.size(); j++) {
