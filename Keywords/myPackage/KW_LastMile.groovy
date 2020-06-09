@@ -39,22 +39,22 @@ public class KW_LastMile {
 	}
 
 	def findOrderId(String order_id, String store_id, String payment_type, Integer status_id) {
-		//				checkOrder = false
 		List<MobileElement> products = driver.findElementsByClassName('android.view.View')
 		def sizes = products.size().toString()
 		KeywordUtil.logInfo(sizes)
 		for (int i = 0; i < products.size(); i++) {
 			KeywordUtil.logInfo(products.get(i).getText())
 			if (products.get(i).getText().contains(order_id)) {
+				String[] texts = products.get(i).getText().trim().split('\\r?\\n')
+				//check text array
+//				for (int j = 0; j < texts.size(); j++) {
+//					KeywordUtil.logInfo('texts : ' + texts[j])
+//				}
+				assert texts[1].contains(store_id)
 				products.get(i).click()
 				return true
-				//						checkOrder = true
-				//						break
 			}
 		}
-		//		findElementToClick('android.view.View',order_id)
-		//		return true
-		//				checkOrder = true
 
 
 		//		List<MobileElement> orders = driver.findElementsById(riderId + 'txt_order_no')
@@ -91,7 +91,6 @@ public class KW_LastMile {
 		//			}
 		//		}
 		return false
-		//				return checkOrder
 	}
 
 	def swipeUp() {

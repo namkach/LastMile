@@ -50,7 +50,7 @@ catch (Exception e) {
     KeywordUtil.markFailed('Crashed... ' + e)
     status = 'Fail'
     remark = 'Cannot start application'
-	//	CustomKeywords.'myPac.StaffKeywords_COD.writeStaff'(order_id, flow_type, delivery_type, payment_type, status, remark)
+	CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
 } 
 
 try {
@@ -70,7 +70,7 @@ try {
 //	if (status.equals('Fail')) {
 //		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
 //	}
-//	
+
 //	List<MobileElement> products = driver.findElementsById(riderId + 'row_order_detail_tv_name')
 //	for(int i = 0; i < products.size(); i++) {
 //		for (int j = 0; j < productName.size(); j++) {
@@ -291,7 +291,7 @@ catch (Exception e) {
 	KeywordUtil.markFailed('Crashed... ' + e)
 	status = 'Fail'
 	remark = e.toString()
-		CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
+	CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
 }
 
 //Mobile.closeApplication()
