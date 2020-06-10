@@ -32,6 +32,7 @@ double countTotalPrice = 0.00
 int statusProduct = 1
 int size = total_product
 double totalPrice = 0.00
+double alltotalPrice = 0.00
 
 try {
     Mobile.startApplication(path, true)
@@ -128,9 +129,6 @@ try {
 //		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
 //	}
 	
-	
-	
-	
 	KeywordUtil.logInfo('----- Processing -----')
 	status_id = 4
 	List<MobileElement> tabs = driver.findElementsByClassName('android.widget.ImageView')
@@ -149,7 +147,7 @@ try {
 
 	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, totalPrice) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
 	
-	(status, remark, productList) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
+	(status, remark, productList, alltotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
 	if (status.equals('Fail')) {
 		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
 	}
@@ -212,9 +210,10 @@ try {
 //	}
 	
 	///////////////////////
+	
 	totalPrice = total_price
 	KeywordUtil.logInfo('totalPrice : ' + totalPrice)
-	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkAllProducts'(countTotalPrice, totalPrice, countQty, status_id)
+	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkAllProducts'(countTotalPrice, totalPrice, alltotalPrice, status_id)
 	if (status.equals('Fail')) {
 		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
 	}
@@ -229,10 +228,10 @@ try {
 	
 	///////////////////////
 //	KeywordUtil.logInfo('----- Processed -----')
-//	List<MobileElement> tabs2 = driver.findElementsByClassName('android.widget.ImageView')
-//	for (int i = 0; i < tabs.size(); i++) {
-//		if (tabs.get(i).getText().contains('ดำเนินการแล้ว')) {
-//			tabs.get(i).click()
+//	tabs = driver.findElementsByClassName('android.widget.ImageView')
+//	for (int i = 0; i < tab.size(); i++) {
+//		if (tab.get(i).getText().contains('ดำเนินการแล้ว')) {
+//			tab.get(i).click()
 //			break
 //		}
 //	}

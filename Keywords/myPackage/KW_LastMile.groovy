@@ -22,7 +22,7 @@ public class KW_LastMile {
 	boolean statusText = false
 	def productText
 	int totalProduct
-	double totalPrice
+	double alltotalPrice
 	ArrayList<String> products = new ArrayList<String>()
 
 	AppiumDriver<MobileElement> driver = MobileDriverFactory.getDriver()
@@ -121,11 +121,15 @@ public class KW_LastMile {
 			if (productText.contains('ยอดสุทธิ')) {
 				statusText = false
 				totalProduct = extractInt(productText)
+				KeywordUtil.logInfo('statusText : ' + statusText)
+			} else if (productText.contains('บาท')) {
+				alltotalPrice = Double.parseDouble(productText.replace(' บาท',''))
 				break
 			} else if (statusText && productText.length() > 0) {
 				products.add(productText)
 			} else if (productText.contains('หมายเหตุ')) {
 				statusText = true
+				KeywordUtil.logInfo('statusText : ' + statusText)
 			}
 		}
 
@@ -148,7 +152,7 @@ public class KW_LastMile {
 			status = 'Fail'
 			remark = 'Fail to check total products at status_id ' + status_id
 		}
-		return [status, remark, products]
+		return [status, remark, products, alltotalPrice]
 	}
 
 	def checkEachProduct(Integer indexProduct, String productName, Integer productQty, Double productUnitPrice, Integer countQty, Double countTotalPrice, Integer statusProduct, Integer status_id) {
@@ -160,8 +164,8 @@ public class KW_LastMile {
 			KeywordUtil.logInfo('productText length : ' + productText.length())
 			if (productText.contains('ยอดสุทธิ')) {
 				statusText = false
-				//			} else if (productText.contains('บาท')) {
-				//				totalPrice = Double.parseDouble(productText.replace(' บาท',''))
+//			} else if (productText.contains('บาท')) {
+//				alltotalPrice = Double.parseDouble(productText.replace(' บาท',''))
 			} else if (statusText && productText.length() > 0) {
 				products.add(productText)
 			} else if (productText.contains('หมายเหตุ')) {
@@ -233,26 +237,24 @@ public class KW_LastMile {
 		//		}
 	}
 
-	def checkAllProducts(Double countTotalPrice, Double totalPrice, Integer countQty, Integer status_id) {
+	def checkAllProducts(Double countTotalPrice, Double totalPrice, Double totalPriceElement, Integer status_id) {
 		int qty
 		double price
 		///////////////////////////////////////////////////////////////////
 		//		MobileElement allTotalPrice = (MobileElement) driver.findElementById(riderId + 'order_detail_tv_total_price')
 		//		MobileElement allQty = (MobileElement) driver.findElementById(riderId + 'order_detail_tv_total_list')
 
-		swipeUp()
-		
-		List<MobileElement> totalPriceText = driver.findElementsById('android.view.View')
-		KeywordUtil.logInfo('totalPriceText Size : ' + totalPriceText.size())
-		for (int i = 0; i < totalPriceText.size(); i++) {
-			KeywordUtil.logInfo('check loop ==== ')
-			KeywordUtil.logInfo('allTotalPrice : ' + totalPriceText.get(i).getText())
-			if (totalPriceText.get(i).getText().contains('บาท')) {
-				KeywordUtil.logInfo('allTotalPrice : ' + totalPriceText.get(i).getText())
-				price = Double.parseDouble(totalPriceText.get(i).getText().replace(' บาท',''))
-				break
-			}
-		}
+//		List<MobileElement> totalPriceText = driver.findElementsById('android.view.View')
+//		KeywordUtil.logInfo('totalPriceText Size : ' + totalPriceText.size())
+//		for (int i = 0; i < totalPriceText.size(); i++) {
+//			KeywordUtil.logInfo('check loop ==== ')
+//			KeywordUtil.logInfo('allTotalPrice : ' + totalPriceText.get(i).getText())
+//			if (totalPriceText.get(i).getText().contains('บาท')) {
+//				KeywordUtil.logInfo('allTotalPrice : ' + totalPriceText.get(i).getText())
+//				price = Double.parseDouble(totalPriceText.get(i).getText().replace(' บาท',''))
+//				break
+//			}
+//		}
 
 		//		double numAllTotalPrice = 0.00
 		//		if (allTotalPrice.getText().contains('บาท')) {
@@ -262,12 +264,12 @@ public class KW_LastMile {
 		//		}
 		//		printType(numAllTotalPrice)
 
-		KeywordUtil.logInfo ('==== price : ' + price)
+		KeywordUtil.logInfo ('==== totalPriceElement : ' + totalPriceElement)
 		KeywordUtil.logInfo ('==== Count Total Price : ' + countTotalPrice)
 		countTotalPrice = 168.00
 		KeywordUtil.logInfo ('==== Count Total Price : ' + countTotalPrice)
-		if (price.equals(countTotalPrice)) {
-			assert price.equals(totalPrice)
+		if (totalPriceElement.equals(countTotalPrice)) {
+			assert totalPriceElement.equals(totalPrice)
 			//			assert qty.equals(countQty)
 			status = ''
 			remark = ''
