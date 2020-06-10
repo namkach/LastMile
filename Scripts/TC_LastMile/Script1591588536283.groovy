@@ -31,7 +31,7 @@ int countQty = 0
 double countTotalPrice = 0.00
 int statusProduct = 1
 int size = total_product
-double price = 0.00
+double totalPrice = 0.00
 
 try {
     Mobile.startApplication(path, true)
@@ -129,24 +129,25 @@ try {
 //	}
 	
 	
-	status_id = 4
+	
 	
 	KeywordUtil.logInfo('----- Processing -----')
+	status_id = 4
 	List<MobileElement> tabs = driver.findElementsByClassName('android.widget.ImageView')
-	for (int i = 0; i <= tabs.size(); i++) {
+	for (int i = 0; i < tabs.size(); i++) {
+		KeywordUtil.logInfo('Text tab : ' + tabs.get(i).getText())
 		if (tabs.get(i).getText().contains('กำลังดำเนินการ')) {
 			tabs.get(i).click()
 			break
 		}
 	}
 	
-	
 	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
 	if (status.equals('Fail')) {
 		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
 	}
 
-	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, price) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
+	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, totalPrice) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
 	
 	(status, remark, productList) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
 	if (status.equals('Fail')) {
@@ -154,15 +155,15 @@ try {
 	}
 	
 	for (int i = 0; i < productList.size(); i++) {
-		KeywordUtil.logInfo(productList.get(i))
-		String[] product = productList.get(i).split('\\r?\\n')
-		name = product[0]
-		qty = CustomKeywords.'myPackage.KW_LastMile.extractInt'(product[1])
-		unitPrice = Double.parseDouble(product[2])
-		KeywordUtil.logInfo(name)
-		KeywordUtil.logInfo(qty.toString())
-		KeywordUtil.logInfo(unitPrice.toString())
-		(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(name, qty, unitPrice, countQty, countTotalPrice, statusProduct, status_id)
+		for (int j = 0; j < productName.size(); j++) {
+			if (productList.get(i).contains(productName[j])) {
+				(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(i, productName[j], productQty[j], productUnitPrice[j], countQty, countTotalPrice, statusProduct, status_id)
+				if (status.equals('Fail')) {
+					return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
+				}
+				break
+			}
+		}
 	}
 	
 //	products = driver.findElementsById(riderId + 'row_order_detail_tv_name')
@@ -209,11 +210,14 @@ try {
 //			price = edit_total_price
 //			break
 //	}
-//	
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkAllProducts'(countTotalPrice, price, countQty, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
-//	}
+	
+	///////////////////////
+	totalPrice = total_price
+	KeywordUtil.logInfo('totalPrice : ' + totalPrice)
+	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkAllProducts'(countTotalPrice, totalPrice, countQty, status_id)
+	if (status.equals('Fail')) {
+		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
+	}
 	
 //	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, price)
 //	KeywordUtil.logInfo('status_id : ' + status_id)
@@ -223,9 +227,10 @@ try {
 //	
 //	Mobile.delay(3)
 	
+	///////////////////////
 //	KeywordUtil.logInfo('----- Processed -----')
 //	List<MobileElement> tabs2 = driver.findElementsByClassName('android.widget.ImageView')
-//	for (int i = 0; i <= tabs.size(); i++) {
+//	for (int i = 0; i < tabs.size(); i++) {
 //		if (tabs.get(i).getText().contains('ดำเนินการแล้ว')) {
 //			tabs.get(i).click()
 //			break
@@ -236,7 +241,7 @@ try {
 //	if (status.equals('Fail')) {
 //		return CustomKeywords.'myPackage.KW_LastMile.writeRider'(order_id, flow_type, payment_type, status, remark)
 //	}
-//	
+
 //	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, price) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
 //	
 //	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
