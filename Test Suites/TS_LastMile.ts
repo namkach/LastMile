@@ -19,8 +19,8 @@
          <combinationType>ONE</combinationType>
          <id>72fa1313-107e-4859-82b6-d5d142c92e5c</id>
          <iterationEntity>
-            <iterationType>ALL</iterationType>
-            <value></value>
+            <iterationType>SPECIFIC</iterationType>
+            <value>3</value>
          </iterationEntity>
          <testDataId>Data Files/TD_LastMile</testDataId>
       </testDataLink>
@@ -137,6 +137,135 @@
          <type>DATA_COLUMN</type>
          <value>Payment_Type</value>
          <variableId>e3faa777-eefa-4809-95ba-7565fb8072a3</variableId>
+      </variableLink>
+   </testCaseLink>
+   <testCaseLink>
+      <guid>c09720b2-bd56-4259-beb1-f7dfc987c269</guid>
+      <isReuseDriver>false</isReuseDriver>
+      <isRun>false</isRun>
+      <testCaseId>Test Cases/test</testCaseId>
+      <testDataLink>
+         <combinationType>ONE</combinationType>
+         <id>4b6d4c80-51bc-4960-b632-dc21aaad99b7</id>
+         <iterationEntity>
+            <iterationType>ALL</iterationType>
+            <value></value>
+         </iterationEntity>
+         <testDataId>Data Files/TD_LastMile</testDataId>
+      </testDataLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Order_id</value>
+         <variableId>d42f4af0-5a15-4e73-a0f6-6d8de7561a80</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Flow_type</value>
+         <variableId>30096e35-a80b-4c82-9bfa-77c9c80fbec8</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Store_id</value>
+         <variableId>a41ac500-a1e1-4675-91ee-963f9ea19df1</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Total_Product</value>
+         <variableId>64a95e3d-0806-47de-ad7c-4bcc505b316f</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Product_Name_1</value>
+         <variableId>e5262ec6-00f3-4062-bf73-6074dac7088b</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>QTY_1</value>
+         <variableId>7f602f46-c3a1-4357-a41a-774a42e8e027</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Unit_Price_1</value>
+         <variableId>3e27a002-de57-43cd-8e0c-2f7cd514fd7f</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Product_Name_2</value>
+         <variableId>38cdebd9-9d4e-4ae5-a9f0-c6edba08c3dd</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>QTY_2</value>
+         <variableId>1928fa0a-26f8-4fc6-ad8b-b22383c9da98</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Unit_Price_2</value>
+         <variableId>d9c696e7-2f5d-4bef-a66f-df8dc7768901</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Product_Name_3</value>
+         <variableId>8e153ed8-6010-44b9-9381-9f4a25e7bb89</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>QTY_3</value>
+         <variableId>14645729-b9fa-44c2-9b84-9ea70914c01b</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Unit_Price_3</value>
+         <variableId>5827145b-1d41-4870-abed-de205abc597f</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Edit_Product</value>
+         <variableId>985a0a89-56b0-48b9-a826-3cac3159c2e0</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Edit_QTY</value>
+         <variableId>c0e0821e-f816-4268-879a-ed5b478d21e8</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Edit_Unit_Price</value>
+         <variableId>985d6813-4f6a-451d-a48c-fd0bc2384ecd</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Total_Price</value>
+         <variableId>77581f04-62d2-44fb-bf3d-b1a2fc90ebc2</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Edit_Total_Price</value>
+         <variableId>4578426b-3f18-4a13-a7e6-8201065c981b</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>4b6d4c80-51bc-4960-b632-dc21aaad99b7</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>Payment_Type</value>
+         <variableId>23c9d2d6-9c34-4655-a6f8-6ce243c7694d</variableId>
       </variableLink>
    </testCaseLink>
 </TestSuiteEntity>
