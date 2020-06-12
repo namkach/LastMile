@@ -462,6 +462,9 @@ public class KW_LastMile {
 					}
 					break
 			}
+			if (checkOrder) {
+				break
+			}
 		}
 		if (checkOrder) {
 			status = 'Pass'
