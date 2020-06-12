@@ -451,16 +451,6 @@ public class KW_LastMile {
 		for (int i = 0; i < statusElement.size(); i++) {
 			KeywordUtil.logInfo('status text : ' + statusElement.get(i).getText())
 			switch (status_id) {
-				case 3 :
-					if (statusElement.get(i).getText().contains('จัดของเสร็จแล้ว')) {
-						checkOrder = true
-					}
-					break
-				case 4 :
-					if (statusElement.get(i).getText().contains('กำลังจัดส่ง')) {
-						checkOrder = true
-					}
-					break
 				case 5 :
 					if (statusElement.get(i).getText().contains('เสร็จสมบูรณ์')) {
 						checkOrder = true
@@ -472,7 +462,6 @@ public class KW_LastMile {
 					}
 					break
 			}
-			break
 		}
 		if (checkOrder) {
 			status = 'Pass'
