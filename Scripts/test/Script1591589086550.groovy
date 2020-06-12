@@ -64,154 +64,33 @@ try {
 	
 	ArrayList<String> productList = new ArrayList<String>()
 	
-//	KeywordUtil.logInfo('----- new order -----')
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-//	
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
+	KeywordUtil.logInfo('----- new order -----')
+		status_id = 4
+		List<MobileElement> tabs = driver.findElementsByClassName('android.widget.ImageView')
+		for (int i = 0; i < tabs.size(); i++) {
+			KeywordUtil.logInfo('Text tab : ' + tabs.get(i).getText())
+			if (tabs.get(i).getText().contains('กำลังดำเนินการ')) {
+				tabs.get(i).click()
+				break
+			}
+		}
+	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
+	if (status.equals('Fail')) {
+		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
+	}
+	
+	
+	
+	
+	
+	
 
-//	for (int i = 0; i < productList.size(); i++) {
-//		for (int j = 0; j < productName.size(); j++) {
-//			if (productList.get(i).contains(productName[j])) {
-//				(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(i, productName[j], productQty[j], productUnitPrice[j], countQty, countTotalPrice, statusProduct, status_id)
-//				if (status.equals('Fail')) {
-//					return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//				}
-//				break
-//			}
-//		}
-//	}
-
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkAllProducts'(countTotalPrice, price, countQty, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-	
-//	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, price)
-//	KeywordUtil.logInfo('status_id : ' + status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-	
-	KeywordUtil.logInfo('----- Processing -----')
-//	List<MobileElement> tabs = driver.findElementsByClassName('android.view.View')
-//	for (int i = 0; i < tabs.size(); i++) {
-//		KeywordUtil.logInfo('Text tab : ' + tabs.get(i).getText())
-//	}
-	
-//	status_id = 4
-//	List<MobileElement> tabs = driver.findElementsByClassName('android.widget.ImageView')
-//	for (int i = 0; i < tabs.size(); i++) {
-//		KeywordUtil.logInfo('Text tab : ' + tabs.get(i).getText())
-////		if (tabs.get(i).getText().contains('กำลังดำเนินการ')) {
-////			tabs.get(i).click()
-////			break
-////		}
-//	}
-	
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-
-//	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, totalPrice) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
-//	
-//	(status, remark, productList, alltotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-//	
-//	for (int i = 0; i < productList.size(); i++) {
-//		for (int j = 0; j < productName.size(); j++) {
-//			if (productList.get(i).contains(productName[j])) {
-//				(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(i, productName[j], productQty[j], productUnitPrice[j], countQty, countTotalPrice, statusProduct, status_id)
-//				if (status.equals('Fail')) {
-//					return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//				}
-//				break
-//			}
-//		}
-//	}
-	
-	
-	///////////////////////
-	
-//	totalPrice = total_price
-//	KeywordUtil.logInfo('totalPrice : ' + totalPrice)
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkAllProducts'(countTotalPrice, totalPrice, alltotalPrice, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-	
-//	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, price)
-//	KeywordUtil.logInfo('status_id : ' + status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-//	
-//	Mobile.delay(3)
-//	
-//	///////////////////////
-//	KeywordUtil.logInfo('----- Processed -----')
-//	tabs = driver.findElementsByClassName('android.widget.ImageView')
-//	for (int i = 0; i < tab.size(); i++) {
-//		if (tab.get(i).getText().contains('ดำเนินการแล้ว')) {
-//			tab.get(i).click()
-//			break
-//		}
-//	}
-//	
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-//
-//	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, price) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
-//	
-//	(status, remark, productList, alltotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-//	
-	
-//	for (int i = 0; i < productList.size(); i++) {
-//		for (int j = 0; j < productName.size(); j++) {
-//			if (productList.get(i).contains(productName[j])) {
-//				(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(i, productName[j], productQty[j], productUnitPrice[j], countQty, countTotalPrice, statusProduct, status_id)
-//				if (status.equals('Fail')) {
-//					return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//				}
-//				break
-//			}
-//		}
-//	}
-	
-	
-	
-	
-//	totalPrice = total_price
-//	KeywordUtil.logInfo('totalPrice : ' + totalPrice)
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkAllProducts'(countTotalPrice, totalPrice, alltotalPrice, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-	
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkStatusId'(status_id)
-//	return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-	
-	
-}
+} 
 catch (Exception e) {
 	KeywordUtil.markFailed('Crashed... ' + e)
 	status = 'Fail'
 	remark = e.toString()
 	CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
 }
-
-//Mobile.closeApplication()
+	
 

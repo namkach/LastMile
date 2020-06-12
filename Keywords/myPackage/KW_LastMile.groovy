@@ -1,5 +1,7 @@
 package myPackage
 
+import org.openqa.selenium.Point
+
 import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.mobile.keyword.internal.MobileDriverFactory
 import com.kms.katalon.core.util.KeywordUtil
@@ -68,9 +70,9 @@ public class KW_LastMile {
 					case 5 :
 						statusOrder = 'เสร็จสมบูรณ์'
 						break
-//					case 6 :
-//						statusOrder = 'ยกเลิกออเดอร์'
-//						break
+					//					case 6 :
+					//						statusOrder = 'ยกเลิกออเดอร์'
+					//						break
 				}
 				KeywordUtil.logInfo('statusOrder : ' + statusOrder)
 				assert texts[2].contains(statusOrder)
@@ -315,26 +317,28 @@ public class KW_LastMile {
 		def cashText = totalPrice.toString()
 		KeywordUtil.logInfo(order_id)
 		//		MobileElement ConfirmOrder = (MobileElement) driver.findElementById(riderId + 'order_detail_bt_confirm')
-		List<MobileElement> ConfirmOrder = driver.findElementsByClassName('android.widget.Button')
-		for (int i = 0; i < ConfirmOrder.size(); i++) {
+//		List<MobileElement> ConfirmOrder = driver.findElementsByClassName('android.widget.Button')
+//		for (int i = 0; i < ConfirmOrder.size(); i++) {
 			KeywordUtil.logInfo('status_id : ' + status_id)
 			KeywordUtil.logInfo('payment_type : ' + payment_type)
 			KeywordUtil.logInfo('totalPrice : ' + cashText)
-			KeywordUtil.logInfo('ConfirmOrder.get(i).getText() : ' + ConfirmOrder.get(i).getText())
+//			KeywordUtil.logInfo('ConfirmOrder.get(i).getText() : ' + ConfirmOrder.get(i).getText())
 			switch (status_id) {
 				case 3 :
-					if (ConfirmOrder.get(i).getText().contains('รับรายการคำสั่งซื้อ')) {
-						KeywordUtil.logInfo(ConfirmOrder.get(i).getText())
-						ConfirmOrder.get(i).click()
-						checkOrder = true
-						break
-					}
+					findElementToClick('android.widget.Button','รับรายการคำสั่งซื้อ')
+//					if (ConfirmOrder.get(i).getText().contains('รับรายการคำสั่งซื้อ')) {
+//						KeywordUtil.logInfo(ConfirmOrder.get(i).getText())
+//						ConfirmOrder.get(i).click()
+//						checkOrder = true
+//						break
+//					}
 					break
 				case 4 :
 					switch (payment_type) {
 						case '1' :
-						if (ConfirmOrder.get(i).getText().contains('ชำระด้วยเงินสด')) {
-							ConfirmOrder.get(i).click()
+						findElementToClick('android.widget.Button','ชำระด้วยเงินสด')
+//						if (ConfirmOrder.get(i).getText().contains('ชำระด้วยเงินสด')) {
+//							ConfirmOrder.get(i).click()
 							List<MobileElement> cash = driver.findElementsByClassName('android.widget.EditText')
 							for (int j = 0; j < cash.size(); j++) {
 								if (cash.get(j).getText().contains('0.00')) {
@@ -355,46 +359,65 @@ public class KW_LastMile {
 							}
 
 							findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
-						}
+//						}
 						break
 						case '2' :
-						if (ConfirmOrder.get(i).getText().contains('ชำระด้วยเงินสดสำเร็จ')) {
-							KeywordUtil.logInfo(ConfirmOrder.get(i).getText())
-							ConfirmOrder.get(i).click()
+							findElementToClick('android.widget.Button','ชำระด้วยเงินสดสำเร็จ')
+//							if (ConfirmOrder.get(i).getText().contains('ชำระด้วยเงินสดสำเร็จ')) {
+//								KeywordUtil.logInfo(ConfirmOrder.get(i).getText())
+//								ConfirmOrder.get(i).click()
+//								break
+//							}
 							break
-						}
-						break
 					}
 					findElementToClick('android.view.View','ข้าม')
 
 					findElementToClick('android.widget.Button','ตกลง')
 
 					Mobile.delay(2)
-					swipeUp()
-
-
-					List<MobileElement> btn = driver.findElementsByClassName('android.widget.Button')
-					KeywordUtil.logInfo('btn size : ' + btn.size())
-					for (int j = 0; j < btn.size(); j++) {
-						KeywordUtil.logInfo(btn.get(j).getText())
-						if (btn.get(j).getText() == 'ตกลง') {
-							KeywordUtil.logInfo('click : ' + btn.get(j).getText())
-							def top_position = Mobile.getElementTopPosition(btn.get(j), 5)
-							KeywordUtil.logInfo('top_position : ' + top_position)
-							btn.get(j).click()
-							KeywordUtil.logInfo('----------------------------')
+					
+					
+//					List<MobileElement> etc = driver.findElementsByClassName('android.view.View')
+					List<MobileElement> confirmSignBtn = driver.findElementsByClassName('android.view.View')
+					KeywordUtil.logInfo('-------> btn size to find ตกลง  : ' + confirmSignBtn.size())
+					for (int j = 0; j < confirmSignBtn.size(); j++) {
+						KeywordUtil.logInfo(confirmSignBtn.get(j).getText())
+						if (confirmSignBtn.get(j).getText() == 'ตกลง') {
+							Point btnLocation = confirmSignBtn.get(j).getLocation()
+							int x = btnLocation.getX()
+							int y = btnLocation.getY()
+							int width = confirmSignBtn.get(j).getSize().getWidth()
+							KeywordUtil.logInfo('location : ' + btnLocation)
+							KeywordUtil.logInfo('x : ' + x)
+							KeywordUtil.logInfo('y : ' + y)
+							KeywordUtil.logInfo('width : ' + width)
+							x = x + (width)
+							KeywordUtil.logInfo('final x  : ' + x)
+							
+							swipeUp()
+							
+							Mobile.tapAtPosition(x, y)
+							
+							
+//							KeywordUtil.logInfo('click : ' + btn.get(j).getText())
+//							def top_position = Mobile.getElementTopPosition(btn.get(j), 5)
+//							KeywordUtil.logInfo('top_position : ' + top_position)
+//							btn.get(j).click()
+							KeywordUtil.logInfo('-------------- sign finish --------------')
 							break
 						}
 					}
 
 
-					findElementToClick('android.view.View','ตกลง')
-					Mobile.delay(3)
+//					findElementToClick('android.view.View','ตกลง')
+//					Mobile.delay(3)
+					
+					
 					findElementToClick('android.widget.Button','ยืนยัน')
 					Mobile.delay(2)
 					checkOrder = true
 					break
-			}
+//			}
 		}
 
 		//		switch (status_id) {
