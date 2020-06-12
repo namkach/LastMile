@@ -21,6 +21,7 @@ public class KW_LastMile {
 	def productText
 	int totalProduct
 	double alltotalPrice
+	def statusOrder
 	ArrayList<String> products = new ArrayList<String>()
 
 	AppiumDriver<MobileElement> driver = MobileDriverFactory.getDriver()
@@ -38,7 +39,7 @@ public class KW_LastMile {
 			remark = ''
 		} else {
 			status = 'Fail'
-			remark = 'Fail to find order ' + order_id + ' at status_id ' + status_id
+			remark = 'Fail to find order at status id ' + status_id
 			KeywordUtil.markFailed(remark)
 		}
 		return [status, remark]
@@ -57,6 +58,22 @@ public class KW_LastMile {
 				//					KeywordUtil.logInfo('texts : ' + texts[j])
 				//				}
 				assert texts[1].contains(store_id)
+				switch (status_id) {
+					case 3 :
+						statusOrder = 'จัดของเสร็จแล้ว'
+						break
+					case 4 :
+						statusOrder = 'กำลังจัดส่ง'
+						break
+					case 5 :
+						statusOrder = 'เสร็จสมบูรณ์'
+						break
+//					case 6 :
+//						statusOrder = 'ยกเลิกออเดอร์'
+//						break
+				}
+				KeywordUtil.logInfo('statusOrder : ' + statusOrder)
+				assert texts[2].contains(statusOrder)
 				products.get(i).click()
 				return true
 			}
@@ -324,15 +341,16 @@ public class KW_LastMile {
 									KeywordUtil.logInfo('cash : ' + cash.get(j).getText())
 									cash.get(j).click()
 									Mobile.delay(2)
-									
+
 									int x = Mobile.getDeviceWidth()/2 - 50
-									int y = (Mobile.getDeviceHeight()*(3/4))  
-									
+									int y = (Mobile.getDeviceHeight()*(3/4))
+
 									Mobile.tapAtPosition(x, y)
 									Mobile.tapAtPosition(x, y)
 									Mobile.tapAtPosition(x, y)
 									Mobile.tapAtPosition(x, y)
 									Mobile.pressBack()
+									Mobile.delay(2)
 								}
 							}
 
@@ -353,8 +371,8 @@ public class KW_LastMile {
 
 					Mobile.delay(2)
 					swipeUp()
-					
-					
+
+
 					List<MobileElement> btn = driver.findElementsByClassName('android.widget.Button')
 					KeywordUtil.logInfo('btn size : ' + btn.size())
 					for (int j = 0; j < btn.size(); j++) {
@@ -368,8 +386,8 @@ public class KW_LastMile {
 							break
 						}
 					}
-					
-					
+
+
 					findElementToClick('android.view.View','ตกลง')
 					Mobile.delay(3)
 					findElementToClick('android.widget.Button','ยืนยัน')
@@ -428,12 +446,21 @@ public class KW_LastMile {
 
 	def checkStatusId(Integer status_id) {
 		checkOrder = false
-		//		MobileElement statusElement = (MobileElement) driver.findElementById(riderId + 'order_detail_time_count_down')
 		List<MobileElement> statusElement = driver.findElementsByClassName('android.view.View')
 		KeywordUtil.logInfo('status_id : ' + status_id)
 		for (int i = 0; i < statusElement.size(); i++) {
 			KeywordUtil.logInfo('status text : ' + statusElement.get(i).getText())
 			switch (status_id) {
+				case 3 :
+					if (statusElement.get(i).getText().contains('จัดของเสร็จแล้ว')) {
+						checkOrder = true
+					}
+					break
+				case 4 :
+					if (statusElement.get(i).getText().contains('กำลังจัดส่ง')) {
+						checkOrder = true
+					}
+					break
 				case 5 :
 					if (statusElement.get(i).getText().contains('เสร็จสมบูรณ์')) {
 						checkOrder = true
@@ -445,11 +472,11 @@ public class KW_LastMile {
 					}
 					break
 			}
+			break
 		}
 		if (checkOrder) {
 			status = 'Pass'
 			remark = '-'
-			KeywordUtil.markPassed('check Status : Pass')
 		} else {
 			status = 'Fail'
 			remark = 'Fail to check Status order at status_id ' + status_id

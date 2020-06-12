@@ -132,26 +132,29 @@ try {
 //	if (status.equals('Fail')) {
 //		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
 //	}
-//
-////	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, totalPrice) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
-////	
-////	(status, remark, productList, alltotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
-////	if (status.equals('Fail')) {
-////		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-////	}
-////	
-////	for (int i = 0; i < productList.size(); i++) {
-////		for (int j = 0; j < productName.size(); j++) {
-////			if (productList.get(i).contains(productName[j])) {
-////				(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(i, productName[j], productQty[j], productUnitPrice[j], countQty, countTotalPrice, statusProduct, status_id)
-////				if (status.equals('Fail')) {
-////					return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-////				}
-////				break
-////			}
-////		}
-////	}
-////	
+
+//	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, totalPrice) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
+//	
+//	(status, remark, productList, alltotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
+//	if (status.equals('Fail')) {
+//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
+//	}
+//	
+//	for (int i = 0; i < productList.size(); i++) {
+//		for (int j = 0; j < productName.size(); j++) {
+//			if (productList.get(i).contains(productName[j])) {
+//				(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(i, productName[j], productQty[j], productUnitPrice[j], countQty, countTotalPrice, statusProduct, status_id)
+//				if (status.equals('Fail')) {
+//					return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
+//				}
+//				break
+//			}
+//		}
+//	}
+//	
+	
+	
+	
 //	totalPrice = total_price
 ////	KeywordUtil.logInfo('totalPrice : ' + totalPrice)
 ////	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkAllProducts'(countTotalPrice, totalPrice, alltotalPrice, status_id)
@@ -182,6 +185,7 @@ try {
 	if (status.equals('Fail')) {
 		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
 	}
+	
 //
 //	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, price) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
 //	
