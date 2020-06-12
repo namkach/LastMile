@@ -29,8 +29,9 @@ public class KW_LastMile {
 	AppiumDriver<MobileElement> driver = MobileDriverFactory.getDriver()
 
 	def findOrder(String order_id, String store_id, String payment_type, Integer status_id) {
+		Mobile.delay(2)
 		checkOrder = findOrderId(order_id, store_id, payment_type, status_id)
-		KeywordUtil.logInfo('checkOrder : ' + checkOrder)
+		KeywordUtil.logInfo('first checkOrder : ' + checkOrder)
 		while(!checkOrder) {
 			swipeUp()
 			checkOrder = findOrderId(order_id, store_id, payment_type, status_id)
@@ -402,7 +403,7 @@ public class KW_LastMile {
 //							KeywordUtil.logInfo('click : ' + btn.get(j).getText())
 //							def top_position = Mobile.getElementTopPosition(btn.get(j), 5)
 //							KeywordUtil.logInfo('top_position : ' + top_position)
-//							btn.get(j).click()
+//							confirmSignBtn.get(j).click()
 							KeywordUtil.logInfo('-------------- sign finish --------------')
 							break
 						}
