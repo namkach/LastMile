@@ -40,7 +40,7 @@ catch (Exception e) {
     KeywordUtil.markFailed('Crashed... ' + e)
     status = 'Fail'
     remark = 'Cannot start application'
-	CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
+	CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 } 
 
 try {
@@ -55,66 +55,17 @@ try {
 //	KeywordUtil.logInfo('----- new order -----')
 //	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
 //	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
+//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 //	}
 //	
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
+//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkProducts'(productName, productQty, productUnitPrice, size, total_price)
 //	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-
-//	List<MobileElement> products = driver.findElementsById(riderId + 'row_order_detail_tv_name')
-//	for(int i = 0; i < products.size(); i++) {
-//		for (int j = 0; j < productName.size(); j++) {
-//			if ((products.get(i).getText() == edit_product) && (products.get(i).getText() == productName[j])) {
-//				switch (flow_type) {
-//					case '1' :
-//						qty = productQty[j] + edit_qty
-//						(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(edit_product, qty, productUnitPrice[j], countQty, countTotalPrice, statusProduct, status_id)
-//						if (status.equals('Fail')) {
-//							return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//						}
-//						break
-//					case '3':
-//						KeywordUtil.logInfo ('skip deleted product : ' + edit_product)
-//						statusProduct = 2
-//						break
-//				}
-//			} else if (products.get(i).getText() == productName[j]) {
-//				(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(productName[j], productQty[j], productUnitPrice[j], countQty, countTotalPrice, statusProduct, status_id)
-//				if (status.equals('Fail')) {
-//					return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//				}
-//			}
-//		}
-//	}
-//	if (flow_type == '2') {
-//		qty = edit_qty
-//		unitPrice = edit_unit_price
-//		(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(edit_product, qty, unitPrice, countQty, countTotalPrice, statusProduct, status_id)
-//		if (status.equals('Fail')) {
-//			return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//		}
+//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 //	}
 //	
-//	switch (flow_type) {
-//		case '0' :
-//			price = total_price
-//			break
-//		case '1'..'3' :
-//			price = edit_total_price
-//			break
-//	}
-//	
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkAllProducts'(countTotalPrice, price, countQty, status_id)
+//	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, totalPrice)
 //	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-	
-//	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, price)
-//	KeywordUtil.logInfo('status_id : ' + status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
+//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 //	}
 	
 	KeywordUtil.logInfo('----- Processing -----')
@@ -130,47 +81,25 @@ try {
 	
 	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
 	if (status.equals('Fail')) {
-		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
+		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 	}
-
-//	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, totalPrice) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
-//	
-//	(status, remark, productList, alltotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-//	
-//	for (int i = 0; i < productList.size(); i++) {
-//		for (int j = 0; j < productName.size(); j++) {
-//			if (productList.get(i).contains(productName[j])) {
-//				(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(i, productName[j], productQty[j], productUnitPrice[j], countQty, countTotalPrice, statusProduct, status_id)
-//				if (status.equals('Fail')) {
-//					return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//				}
-//				break
-//			}
-//		}
-//	}
-//	
 	
-	
-	
-	totalPrice = total_price
-//	KeywordUtil.logInfo('totalPrice : ' + totalPrice)
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkAllProducts'(countTotalPrice, totalPrice, alltotalPrice, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-	
-	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, totalPrice)
+	KeywordUtil.logInfo('productName : ' + productName)
+	KeywordUtil.logInfo('productQty : ' + productQty)
+	KeywordUtil.logInfo('productUnitPrice : ' + productUnitPrice)
+	KeywordUtil.logInfo('total price : ' + total_price)
+	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, user_preferred, totalPrice)
+	if (status.equals('Fail')) {
+		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
+	}
+	KeywordUtil.logInfo('check after function')
+		
+	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, user_preferred, totalPrice)
 	KeywordUtil.logInfo('status_id : ' + status_id)
 	if (status.equals('Fail')) {
-		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
+		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 	}
 	
-	Mobile.delay(3)
-	
-	///////////////////////
 	KeywordUtil.logInfo('----- Processed -----')
 	status_id = 5
 	List<MobileElement> tab = driver.findElementsByClassName('android.widget.ImageView')
@@ -183,103 +112,22 @@ try {
 	
 	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
 	if (status.equals('Fail')) {
-		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
+		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 	}
 	
-//
-//	(qty, unitPrice, countQty, countTotalPrice, statusProduct, size, price) = CustomKeywords.'myPackage.KW_LastMile.setDefault'(total_product)
-//	
-//	(status, remark, productList, alltotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkTotalProducts'(flow_type, size, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-//	
-//	
-//	for (int i = 0; i < productList.size(); i++) {
-//		for (int j = 0; j < productName.size(); j++) {
-//			if (productList.get(i).contains(productName[j])) {
-//				(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(i, productName[j], productQty[j], productUnitPrice[j], countQty, countTotalPrice, statusProduct, status_id)
-//				if (status.equals('Fail')) {
-//					return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//				}
-//				break
-//			}
-//		}
-//	}
-//	
-//	
-//	totalPrice = total_price
-//	KeywordUtil.logInfo('totalPrice : ' + totalPrice)
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkAllProducts'(countTotalPrice, totalPrice, alltotalPrice, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-	
-	
-	
-//	products = driver.findElementsById(riderId + 'row_order_detail_tv_name')
-//	for(int i = 0; i < products.size(); i++) {
-//		for (int j = 0; j < productName.size(); j++) {
-//			if ((products.get(i).getText() == edit_product) && (products.get(i).getText() == productName[j])) {
-//				switch (flow_type) {
-//					case '1' :
-//						qty = productQty[j] + edit_qty
-//						(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(edit_product, qty, productUnitPrice[j], countQty, countTotalPrice, statusProduct, status_id)
-//						if (status.equals('Fail')) {
-//							return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//						}
-//						break
-//					case '3':
-//						KeywordUtil.logInfo ('skip deleted product : ' + edit_product)
-//						statusProduct = 2
-//						break
-//				}
-//			} else if (products.get(i).getText() == productName[j]) {
-//				(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(productName[j], productQty[j], productUnitPrice[j], countQty, countTotalPrice, statusProduct, status_id)
-//				if (status.equals('Fail')) {
-//					return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//				}
-//			}
-//		}
-//	}
-//	
-//	if (flow_type == '2') {
-//		qty = edit_qty
-//		unitPrice = edit_unit_price
-//		(status, remark, countQty, countTotalPrice) = CustomKeywords.'myPackage.KW_LastMile.checkEachProduct'(edit_product, qty, unitPrice, countQty, countTotalPrice, statusProduct, status_id)
-//		if (status.equals('Fail')) {
-//			return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//		}
-//	}
-//
-//	println ('countQty : ' + countQty)
-//	println ('countTotalPrice : ' + countTotalPrice)
-//	
-//	switch (flow_type) {
-//		case '0' :
-//			price = total_price
-//			break
-//		case '1'..'3' :
-//			price = edit_total_price
-//			break
-//	}
-//
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkAllProducts'(countTotalPrice, price, countQty, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-//	}
-//	
+	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkProducts'(productName, productQty, productUnitPrice, size, total_price)
+	if (status.equals('Fail')) {
+		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
+	}
 	
 	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkStatusId'(status_id)
-	return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
-	
-	
+	return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 }
 catch (Exception e) {
 	KeywordUtil.markFailed('Crashed... ' + e)
 	status = 'Fail'
 	remark = e.toString()
-	CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, status, remark)
+	CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 }
 
 //Mobile.closeApplication()

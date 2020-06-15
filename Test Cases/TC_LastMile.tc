@@ -138,4 +138,11 @@
       <masked>false</masked>
       <name>payment_type</name>
    </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>0f52b218-ed14-4082-8792-753d8a14a893</id>
+      <masked>false</masked>
+      <name>user_preferred</name>
+   </variable>
 </TestCaseEntity>

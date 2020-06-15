@@ -20,7 +20,7 @@
          <id>72fa1313-107e-4859-82b6-d5d142c92e5c</id>
          <iterationEntity>
             <iterationType>SPECIFIC</iterationType>
-            <value>2</value>
+            <value>6</value>
          </iterationEntity>
          <testDataId>Data Files/TD_LastMile</testDataId>
       </testDataLink>
@@ -137,6 +137,12 @@
          <type>DATA_COLUMN</type>
          <value>Payment_Type</value>
          <variableId>e3faa777-eefa-4809-95ba-7565fb8072a3</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId>72fa1313-107e-4859-82b6-d5d142c92e5c</testDataLinkId>
+         <type>DATA_COLUMN</type>
+         <value>User_Preferred</value>
+         <variableId>0f52b218-ed14-4082-8792-753d8a14a893</variableId>
       </variableLink>
    </testCaseLink>
    <testCaseLink>
