@@ -20,7 +20,8 @@ double countTotalPrice = 0.00
 int statusProduct = 1
 int size = total_product
 double totalPrice = 0.00
-double alltotalPrice = 0.00
+double alltotalPrice = 0.00ฃ
+boolean checkElement
 
 try {
     Mobile.startApplication(path, true)
@@ -63,7 +64,7 @@ try {
 //		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 //	}
 //	
-//	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, totalPrice)
+//	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, user_preferred, totalPrice)
 //	if (status.equals('Fail')) {
 //		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 //	}
@@ -71,12 +72,19 @@ try {
 	KeywordUtil.logInfo('----- Processing -----')
 	status_id = 4
 	List<MobileElement> tabs = driver.findElementsByClassName('android.widget.ImageView')
+	checkElement = false
 	for (int i = 0; i < tabs.size(); i++) {
 		KeywordUtil.logInfo('Text tab : ' + tabs.get(i).getText())
 		if (tabs.get(i).getText().contains('กำลังดำเนินการ')) {
 			tabs.get(i).click()
+			checkElement = true
 			break
 		}
+	}
+	if (!checkElement) {
+		status = 'Fail'
+		remark = 'Fail to press processing tab'
+		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 	}
 	
 	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
@@ -84,30 +92,31 @@ try {
 		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 	}
 	
-	KeywordUtil.logInfo('productName : ' + productName)
-	KeywordUtil.logInfo('productQty : ' + productQty)
-	KeywordUtil.logInfo('productUnitPrice : ' + productUnitPrice)
-	KeywordUtil.logInfo('total price : ' + total_price)
-	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, user_preferred, totalPrice)
+	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkProducts'(productName, productQty, productUnitPrice, size, total_price)
 	if (status.equals('Fail')) {
 		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 	}
-	KeywordUtil.logInfo('check after function')
-		
+
 	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, user_preferred, totalPrice)
-	KeywordUtil.logInfo('status_id : ' + status_id)
 	if (status.equals('Fail')) {
 		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 	}
 	
 	KeywordUtil.logInfo('----- Processed -----')
-	status_id = 5
+//	status_id = 5
 	List<MobileElement> tab = driver.findElementsByClassName('android.widget.ImageView')
+	checkElement = false
 	for (int i = 0; i < tab.size(); i++) {
 		if (tab.get(i).getText().contains('ดำเนินการแล้ว')) {
 			tab.get(i).click()
+			checkElement = true
 			break
 		}
+	}
+	if (!checkElement) {
+		status = 'Fail'
+		remark = 'Fail to press processed tab'
+		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 	}
 	
 	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)

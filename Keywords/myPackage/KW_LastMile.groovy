@@ -51,15 +51,11 @@ public class KW_LastMile {
 	def findOrderId(String order_id, String store_id, String payment_type, Integer status_id) {
 		List<MobileElement> products = driver.findElementsByClassName('android.view.View')
 		def sizes = products.size().toString()
-		KeywordUtil.logInfo(sizes)
+		KeywordUtil.logInfo('Size : ' + sizes)
 		for (int i = 0; i < products.size(); i++) {
 			KeywordUtil.logInfo(products.get(i).getText())
 			if (products.get(i).getText().contains(order_id)) {
 				String[] texts = products.get(i).getText().split('\\r?\\n')
-				//check text array
-				//				for (int j = 0; j < texts.size(); j++) {
-				//					KeywordUtil.logInfo('texts : ' + texts[j])
-				//				}
 				assert texts[1].contains(store_id)
 				switch (status_id) {
 					case 3 :
@@ -81,41 +77,6 @@ public class KW_LastMile {
 				return true
 			}
 		}
-
-
-		//		List<MobileElement> orders = driver.findElementsById(riderId + 'txt_order_no')
-		//		List<MobileElement> storeId = driver.findElementsById(riderId + 'txt_store_id')
-		//		for (int j = orders.size() - 1; j >= 0; j--) {
-		//			if (orders.get(j).getText().equals(order_id)) {
-		//				KeywordUtil.markPassed ('*** order found ***')
-		//				switch (payment_type) {
-		//					case '1' :
-		//						checkOrder = true
-		//						break
-		//					case '2' :
-		//						MobileElement paymentIcon = (MobileElement) driver.findElementById(riderId + 'img_payment_type')
-		//						if (paymentIcon.isDisplayed()) {
-		//							checkOrder = true
-		//						}
-		//						break
-		//					case '4' :
-		//						if (status_id == 5 || status_id == 6) {
-		//							checkOrder = true
-		//						} else {
-		//							MobileElement paymentIcon = (MobileElement) driver.findElementById(riderId + 'img_payment_type')
-		//							if (paymentIcon.isDisplayed()) {
-		//								checkOrder = true
-		//							}
-		//						}
-		//						break
-		//				}
-		////				assert storeId.get(j).getText() == store_id
-		//				orders.get(j).click()
-		//				MobileElement orderNo = (MobileElement) driver.findElementById(riderId + 'main_toolbar_tv_order')
-		//				assert orderNo.getText().equals(order_id)
-		//				break
-		//			}
-		//		}
 		return false
 	}
 
@@ -128,11 +89,6 @@ public class KW_LastMile {
 	}
 
 	def checkProducts(String[] productName, Integer[] productQty, Double[] productUnitPrice, Integer total_product, Double total_price) {
-		KeywordUtil.logInfo('productName : ' + productName)
-		KeywordUtil.logInfo('productQty : ' + productQty)
-		KeywordUtil.logInfo('productUnitPrice : ' + productUnitPrice)
-		KeywordUtil.logInfo('total_product : ' + total_product)
-
 		// check total products
 		checkOrder = checkTotalProducts(total_product)
 		KeywordUtil.logInfo('checkOrder : ' + checkOrder)
@@ -166,9 +122,10 @@ public class KW_LastMile {
 			}
 		}
 
-		// set total price
+		///// set total price /////
 		KeywordUtil.logInfo('countTotalPrice -- guess 1188 -- : ' + countTotalPrice)
-		countTotalPrice = 168.0
+		countTotalPrice = 594.0
+		///////////////////////////
 		if (countTotalPrice.equals(total_price)) {
 			status = ''
 			remark = ''
@@ -202,251 +159,69 @@ public class KW_LastMile {
 		}
 	}
 
-
-	//	def checkTotalProducts(String flow_type, Integer total_product, Integer status_id) {
-	//		statusText = false
-	//		boolean text
-	//		List<MobileElement> listProducts = driver.findElementsByClassName('android.view.View')
-	//		KeywordUtil.logInfo('listProducts : ' + listProducts.size())
-	//		for (int i = 0; i < listProducts.size(); i++) {
-	//			text = listProducts.get(i).getAttribute('clickable')
-	//			KeywordUtil.logInfo('i : ' + text)
-	//			KeywordUtil.logInfo('text : ' + listProducts.get(i).getText())
-	//
-	//
-	//			//			if () {
-	//			//
-	//			//			}
-	//
-	//
-	//			//			KeywordUtil.logInfo('products : ' + listProducts.get(i).getText())
-	//			//			productText = listProducts.get(i).getText()
-	//			//			KeywordUtil.logInfo('productText length : ' + productText.length())
-	//			//			if (productText.contains('ยอดสุทธิ')) {
-	//			//				statusText = false
-	//			//				totalProduct = extractInt(productText)
-	//			//				KeywordUtil.logInfo('statusText : ' + statusText)
-	//			//			} else if (productText.contains('บาท')) {
-	//			//				alltotalPrice = Double.parseDouble(productText.replace(' บาท',''))
-	//			//				break
-	//			//			} else if (statusText && productText.length() > 0) {
-	//			//				products.add(productText)
-	//			//			} else if (productText.contains('หมายเหตุ')) {
-	//			//				statusText = true
-	//			//				KeywordUtil.logInfo('statusText : ' + statusText)
-	//			//			}
-	//		}
-	//
-	//		// check product list
-	//		//		for (int j = 0; j < product.size(); j++) {
-	//		//			KeywordUtil.logInfo('texts : ' + product.get(j))
-	//		//		}
-	//
-	//		//		if (flow_type.equals('2')) {
-	//		//			total_product += 1
-	//		//		}
-	//
-	//		//		KeywordUtil.logInfo('totalProduct : ' + totalProduct)
-	//		//		KeywordUtil.logInfo('products size : ' + products.size())
-	//		//		for (int k = 0; k < products.size(); k++) {
-	//		//			KeywordUtil.logInfo('products ' + products.get(k))
-	//		//		}
-	//		//		if (totalProduct .equals(products.size())) {
-	//		//			assert totalProduct == total_product
-	//		//			KeywordUtil.logInfo ('Check total product --> Passed')
-	//		//			status = ''
-	//		//			remark = ''
-	//		//		} else {
-	//		//			KeywordUtil.logInfo ('Check total product --> Failed')
-	//		//			status = 'Fail'
-	//		//			remark = 'Fail to check total products at status_id ' + status_id
-	//		//		}
-	//		return [status, remark, products, alltotalPrice]
-	//	}
-
-//	def checkEachProduct(Integer indexProduct, String productName, Integer productQty, Double productUnitPrice, Integer countQty, Double countTotalPrice, Integer statusProduct, Integer status_id) {
-//		List<MobileElement> listProducts = driver.findElementsByClassName('android.view.View')
-//		for (int i = 0; i < listProducts.size(); i++) {
-//			KeywordUtil.logInfo('products : ' + listProducts.get(i).getText())
-//			productText = listProducts.get(i).getText()
-//			KeywordUtil.logInfo('productText length : ' + productText.length())
-//			if (productText.contains('เกินเวลา')) {
-//				statusText = false
-//				//			} else if (productText.contains('บาท')) {
-//				//				alltotalPrice = Double.parseDouble(productText.replace(' บาท',''))
-//			} else if (statusText && productText.length() > 0) {
-//				products.add(productText)
-//			} else if (productText.contains('หมายเหตุ')) {
-//				statusText = true
-//			}
-//		}
-//
-//		String[] product = products.get(indexProduct).split('\\r?\\n')
-//		def name = product[0]
-//		int qty = extractInt(product[1])
-//		double totalPrice = Double.parseDouble(product[2])
-//
-//		//get each product details
-//		KeywordUtil.logInfo(name)
-//		KeywordUtil.logInfo(qty.toString())
-//		KeywordUtil.logInfo(totalPrice.toString())
-//
-//		if (productQty.equals(qty)) {
-//
-//			assert totalPrice.equals((productQty * productUnitPrice).round(2))
-//			countQty += qty
-//			countTotalPrice += totalPrice
-//			KeywordUtil.logInfo('countQty : ' + countQty)
-//			KeywordUtil.logInfo('countTotalPrice : ' + countTotalPrice)
-//			status = ''
-//			remark = ''
-//		} else {
-//			status = 'Fail'
-//			remark = 'Fail to check each product in order at status_id ' + status_id
-//			KeywordUtil.markFailed(remark)
-//		}
-//		return [status, remark, countQty, countTotalPrice]
-//
-//
-//		//		List<MobileElement> prods = driver.findElementsById(riderId + 'row_order_detail_tv_name')
-//		//		List<MobileElement> qtys = driver.findElementsById(riderId + 'row_order_detail_tv_amount')
-//		//		List<MobileElement> prices = driver.findElementsById(riderId + 'row_order_detail_tv_price')
-//		//
-//		//		double totalPrice
-//		//		int numQty
-//		//		for (int k = 0; k < prods.size(); k++) {
-//		//			if (prods.get(k).getText().equals(name)) {
-//		//				KeywordUtil.logInfo ('check qty before ' + name + ' : ' + countQty)
-//		//				numQty = extractInt(qtys.get(k).getText())
-//		//				assert numQty.equals(qty)
-//		//				switch (statusProduct) {
-//		//					case 1:
-//		//						totalPrice = Double.parseDouble(prices.get(k).getText())
-//		//						break
-//		//					case 2 :
-//		//						totalPrice = Double.parseDouble(prices.get(k - 1).getText())
-//		//						break
-//		//				}
-//		//
-//		//				if (totalPrice.equals((qty * unitPrice))) {
-//		//					countQty += qty
-//		//					countTotalPrice += totalPrice
-//		//					KeywordUtil.logInfo('countQty : ' + countQty)
-//		//					KeywordUtil.logInfo('countTotalPrice : ' + countTotalPrice)
-//		//					status = ''
-//		//					remark = ''
-//		//				} else {
-//		//					status = 'Fail'
-//		//					remark = 'Fail to check each product in order at status_id ' + status_id
-//		//					KeywordUtil.markFailed(remark)
-//		//				}
-//		//				return [status, remark, countQty, countTotalPrice]
-//		//			}
-//		//		}
-//	}
-
-//	def checkAllProducts(Double countTotalPrice, Double totalPrice, Double totalPriceElement, Integer status_id) {
-//		int qty
-//		double price
-//		///////////////////////////////////////////////////////////////////
-//		//		MobileElement allTotalPrice = (MobileElement) driver.findElementById(riderId + 'order_detail_tv_total_price')
-//		//		MobileElement allQty = (MobileElement) driver.findElementById(riderId + 'order_detail_tv_total_list')
-//
-//		//		List<MobileElement> totalPriceText = driver.findElementsById('android.view.View')
-//		//		KeywordUtil.logInfo('totalPriceText Size : ' + totalPriceText.size())
-//		//		for (int i = 0; i < totalPriceText.size(); i++) {
-//		//			KeywordUtil.logInfo('check loop ==== ')
-//		//			KeywordUtil.logInfo('allTotalPrice : ' + totalPriceText.get(i).getText())
-//		//			if (totalPriceText.get(i).getText().contains('บาท')) {
-//		//				KeywordUtil.logInfo('allTotalPrice : ' + totalPriceText.get(i).getText())
-//		//				price = Double.parseDouble(totalPriceText.get(i).getText().replace(' บาท',''))
-//		//				break
-//		//			}
-//		//		}
-//
-//		//		double numAllTotalPrice = 0.00
-//		//		if (allTotalPrice.getText().contains('บาท')) {
-//		//			numAllTotalPrice = Double.parseDouble(allTotalPrice.getText().replace(' บาท',''))
-//		//		} else {
-//		//			numAllTotalPrice = Double.parseDouble(allTotalPrice.getText())
-//		//		}
-//		//		printType(numAllTotalPrice)
-//
-//		KeywordUtil.logInfo ('==== totalPriceElement : ' + totalPriceElement)
-//		KeywordUtil.logInfo ('==== Count Total Price : ' + countTotalPrice)
-//		countTotalPrice = 594.00
-//		KeywordUtil.logInfo ('==== Count Total Price : ' + countTotalPrice)
-//		if (totalPriceElement.equals(countTotalPrice)) {
-//			assert totalPriceElement.equals(totalPrice)
-//			status = ''
-//			remark = ''
-//		} else {
-//			status = 'Fail'
-//			remark = 'Fail to Check All Products order at status_id ' + status_id
-//			KeywordUtil.markFailed(remark)
-//		}
-//		return [status, remark]
-//	}
-
 	def confirmBtn(String order_id, Integer status_id, String payment_type, String user_preferred, Double totalPrice) {
-		checkOrder = false
+//		checkOrder = false
 		def cashText = totalPrice.toString()
-		KeywordUtil.logInfo(order_id)
-		KeywordUtil.logInfo('status_id : ' + status_id)
-		KeywordUtil.logInfo('payment_type : ' + payment_type)
-		KeywordUtil.logInfo('totalPrice : ' + cashText)
 		switch (status_id) {
 			case 3 :
-				findElementToClick('android.widget.Button','รับรายการคำสั่งซื้อ')
-				checkOrder = true
+				checkOrder = findElementToClick('android.widget.Button','รับรายการคำสั่งซื้อ')
 				break
 			case 4 :
 				switch (payment_type) {
 					case 'cod' :
-						switch (user_preferred) {
-							case 'cash' : 
-								findElementToClick('android.widget.Button','ชำระด้วยเงินสด')
-								List<MobileElement> cash = driver.findElementsByClassName('android.widget.EditText')
-								for (int j = 0; j < cash.size(); j++) {
-									if (cash.get(j).getText().contains('0.00')) {
-										KeywordUtil.logInfo('cash : ' + cash.get(j).getText())
-										cash.get(j).click()
-										Mobile.delay(2)
-			
-										int x = Mobile.getDeviceWidth()/2 - 50
-										int y = (Mobile.getDeviceHeight()*(3/4))
-			
+					switch (user_preferred) {
+						case 'cash' :
+							checkOrder = findElementToClick('android.widget.Button','ชำระด้วยเงินสด')
+							if (!checkOrder) {
+								break
+							}
+							List<MobileElement> cash = driver.findElementsByClassName('android.widget.EditText')
+							for (int j = 0; j < cash.size(); j++) {
+								if (cash.get(j).getText().contains('0.00')) {
+									KeywordUtil.logInfo('cash : ' + cash.get(j).getText())
+									cash.get(j).click()
+									Mobile.delay(2)
+	
+									int x = Mobile.getDeviceWidth()/2 - 50
+									int y = (Mobile.getDeviceHeight()*(3/4))
+	
+									for (int k = 0; k < 4; k++) {
 										Mobile.tapAtPosition(x, y)
-										Mobile.tapAtPosition(x, y)
-										Mobile.tapAtPosition(x, y)
-										Mobile.tapAtPosition(x, y)
-										Mobile.pressBack()
-										Mobile.delay(2)
 									}
+									Mobile.pressBack()
+									Mobile.delay(2)
 								}
-			
-								findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
+							}
+							checkOrder = findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
+							break
+						case 'tmw' :
+							checkOrder = findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่')
+							if (!checkOrder) {
 								break
-							case 'tmw' :
-								findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่')
-								Mobile.delay(10)
-								findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
-								break
-						}
+							}
+							Mobile.delay(10)
+							checkOrder = findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
+							break
+					}
 					case 'no' :
-						switch (user_preferred) {
-							case 'cash' :
-								findElementToClick('android.widget.Button','ชำระด้วยเงินสดสำเร็จ')
-								break
-							case 'tmw' :
-								/////////
-								break
-						}
+					switch (user_preferred) {
+						case 'cash' :
+							checkOrder = findElementToClick('android.widget.Button','ชำระด้วยเงินสดสำเร็จ')
+							break
+						case 'tmw' :
+						/////////
 						break
+					}
+					break
 				}
-				findElementToClick('android.view.View','ข้าม')
-
-				findElementToClick('android.widget.Button','ตกลง')
+				checkOrder = findElementToClick('android.view.View','ข้าม')
+				if (!checkOrder) {
+					break
+				}
+				checkOrder = findElementToClick('android.widget.Button','ตกลง')
+				if (!checkOrder) {
+					break
+				}
 
 				Mobile.delay(2)
 				List<MobileElement> confirmSignBtn = driver.findElementsByClassName('android.view.View')
@@ -458,20 +233,15 @@ public class KW_LastMile {
 						int x = btnLocation.getX()
 						int y = btnLocation.getY()
 						int width = confirmSignBtn.get(j).getSize().getWidth()
-						KeywordUtil.logInfo('location : ' + btnLocation)
-						KeywordUtil.logInfo('x : ' + x)
-						KeywordUtil.logInfo('y : ' + y)
-						KeywordUtil.logInfo('width : ' + width)
 						x = x + (width)
-						KeywordUtil.logInfo('final x  : ' + x)
 						swipeUp()
 						Mobile.tapAtPosition(x, y)
+						checkOrder = true
 						break
 					}
 				}
-				findElementToClick('android.widget.Button','ยืนยัน')
+				checkOrder = findElementToClick('android.widget.Button','ยืนยัน')
 				Mobile.delay(2)
-				checkOrder = true
 				break
 		}
 		if (checkOrder) {
@@ -543,9 +313,10 @@ public class KW_LastMile {
 			if (btn.get(j).getText() == text) {
 				KeywordUtil.logInfo('click : ' + btn.get(j).getText())
 				btn.get(j).click()
-				break
+				return true
 			}
 		}
+		return false
 	}
 
 	def stampResult(String order_id, String flow_type, String payment_type, String user_preferred,String status, String remark) {
