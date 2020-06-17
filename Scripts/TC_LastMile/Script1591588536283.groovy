@@ -7,7 +7,7 @@ import com.kms.katalon.core.util.KeywordUtil as KeywordUtil
 import io.appium.java_client.AppiumDriver as AppiumDriver
 import io.appium.java_client.MobileElement as MobileElement
 
-def path = 'D:\\Users\\sunitakac\\Desktop\\apk\\lastMile\\app-release.apk'
+def path = 'D:\\Users\\sunitakac\\Desktop\\apk\\lastMile\\last_mile_v_0_0_9b.apk'
 def status = ''
 def remark = '-'
 
@@ -20,7 +20,7 @@ double countTotalPrice = 0.00
 int statusProduct = 1
 int size = total_product
 double totalPrice = 0.00
-double alltotalPrice = 0.00ฃ
+double alltotalPrice = 0.00
 boolean checkElement
 
 try {
@@ -53,24 +53,26 @@ try {
 	
 	ArrayList<String> productList = new ArrayList<String>()
 	
-//	KeywordUtil.logInfo('----- new order -----')
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
-//	}
-//	
-//	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkProducts'(productName, productQty, productUnitPrice, size, total_price)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
-//	}
-//	
-//	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, user_preferred, totalPrice)
-//	if (status.equals('Fail')) {
-//		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
-//	}
+	KeywordUtil.logInfo('----- new order -----')
+	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, user_preferred, status_id)
+	if (status.equals('Fail')) {
+		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
+	}
+	
+	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.checkProducts'(productName, productQty, productUnitPrice, size, total_price)
+	if (status.equals('Fail')) {
+		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
+	}
+	
+	(status, remark, status_id) = CustomKeywords.'myPackage.KW_LastMile.confirmBtn'(order_id, status_id, payment_type, user_preferred, totalPrice)
+	if (status.equals('Fail')) {
+		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
+	}
+	
+	KeywordUtil.logInfo('status_id : ' + status_id)
+//	status_id = 4
 	
 	KeywordUtil.logInfo('----- Processing -----')
-	status_id = 4
 	List<MobileElement> tabs = driver.findElementsByClassName('android.widget.ImageView')
 	checkElement = false
 	for (int i = 0; i < tabs.size(); i++) {
@@ -87,7 +89,7 @@ try {
 		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 	}
 	
-	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
+	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, user_preferred, status_id)
 	if (status.equals('Fail')) {
 		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 	}
@@ -119,7 +121,7 @@ try {
 		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 	}
 	
-	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, payment_type, status_id)
+	(status, remark) = CustomKeywords.'myPackage.KW_LastMile.findOrder'(order_id, store_id, user_preferred, status_id)
 	if (status.equals('Fail')) {
 		return CustomKeywords.'myPackage.KW_LastMile.stampResult'(order_id, flow_type, payment_type, user_preferred, status, remark)
 	}

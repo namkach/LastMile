@@ -28,13 +28,13 @@ public class KW_LastMile {
 
 	AppiumDriver<MobileElement> driver = MobileDriverFactory.getDriver()
 
-	def findOrder(String order_id, String store_id, String payment_type, Integer status_id) {
+	def findOrder(String order_id, String store_id, String user_preferred, Integer status_id) {
 		Mobile.delay(2)
-		checkOrder = findOrderId(order_id, store_id, payment_type, status_id)
+		checkOrder = findOrderId(order_id, store_id, user_preferred, status_id)
 		KeywordUtil.logInfo('first checkOrder : ' + checkOrder)
 		while(!checkOrder) {
 			swipeUp()
-			checkOrder = findOrderId(order_id, store_id, payment_type, status_id)
+			checkOrder = findOrderId(order_id, store_id, user_preferred, status_id)
 			KeywordUtil.logInfo('checkOrder : ' + checkOrder)
 		}
 		if (checkOrder) {
@@ -48,8 +48,16 @@ public class KW_LastMile {
 		return [status, remark]
 	}
 
-	def findOrderId(String order_id, String store_id, String payment_type, Integer status_id) {
-		List<MobileElement> products = driver.findElementsByClassName('android.view.View')
+	def findOrderId(String order_id, String store_id, String user_preferred, Integer status_id) {
+		List<MobileElement> products
+		switch (user_preferred) {
+			case 'cash' :
+				products = driver.findElementsByClassName('android.view.View')
+				break
+			case 'tmw' :
+				products = driver.findElementsByClassName('android.widget.ImageView')
+				break
+		}
 		def sizes = products.size().toString()
 		KeywordUtil.logInfo('Size : ' + sizes)
 		for (int i = 0; i < products.size(); i++) {
@@ -74,6 +82,7 @@ public class KW_LastMile {
 				KeywordUtil.logInfo('statusOrder : ' + statusOrder)
 				assert texts[2].contains(statusOrder)
 				products.get(i).click()
+				Mobile.delay(2)
 				return true
 			}
 		}
@@ -124,7 +133,7 @@ public class KW_LastMile {
 
 		///// set total price /////
 		KeywordUtil.logInfo('countTotalPrice -- guess 1188 -- : ' + countTotalPrice)
-		countTotalPrice = 594.0
+		countTotalPrice = total_price
 		///////////////////////////
 		if (countTotalPrice.equals(total_price)) {
 			status = ''
@@ -160,7 +169,7 @@ public class KW_LastMile {
 	}
 
 	def confirmBtn(String order_id, Integer status_id, String payment_type, String user_preferred, Double totalPrice) {
-//		checkOrder = false
+		//		checkOrder = false
 		def cashText = totalPrice.toString()
 		switch (status_id) {
 			case 3 :
@@ -171,37 +180,37 @@ public class KW_LastMile {
 					case 'cod' :
 					switch (user_preferred) {
 						case 'cash' :
-							checkOrder = findElementToClick('android.widget.Button','ชำระด้วยเงินสด')
-							if (!checkOrder) {
-								break
-							}
-							List<MobileElement> cash = driver.findElementsByClassName('android.widget.EditText')
-							for (int j = 0; j < cash.size(); j++) {
-								if (cash.get(j).getText().contains('0.00')) {
-									KeywordUtil.logInfo('cash : ' + cash.get(j).getText())
-									cash.get(j).click()
-									Mobile.delay(2)
-	
-									int x = Mobile.getDeviceWidth()/2 - 50
-									int y = (Mobile.getDeviceHeight()*(3/4))
-	
-									for (int k = 0; k < 4; k++) {
-										Mobile.tapAtPosition(x, y)
-									}
-									Mobile.pressBack()
-									Mobile.delay(2)
+						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยเงินสด')
+						if (!checkOrder) {
+							break
+						}
+						List<MobileElement> cash = driver.findElementsByClassName('android.widget.EditText')
+						for (int j = 0; j < cash.size(); j++) {
+							if (cash.get(j).getText().contains('0.00')) {
+								KeywordUtil.logInfo('cash : ' + cash.get(j).getText())
+								cash.get(j).click()
+								Mobile.delay(2)
+
+								int x = Mobile.getDeviceWidth()/2 - 50
+								int y = (Mobile.getDeviceHeight()*(7/8))
+
+								for (int k = 0; k < 4; k++) {
+									Mobile.tapAtPosition(x, y)
 								}
+								Mobile.pressBack()
+								Mobile.delay(2)
 							}
-							checkOrder = findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
-							break
+						}
+						checkOrder = findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
+						break
 						case 'tmw' :
-							checkOrder = findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่')
-							if (!checkOrder) {
-								break
-							}
-							Mobile.delay(10)
-							checkOrder = findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
+						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่')
+						if (!checkOrder) {
 							break
+						}
+						Mobile.delay(10)
+						checkOrder = findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
+						break
 					}
 					case 'no' :
 					switch (user_preferred) {
@@ -209,8 +218,8 @@ public class KW_LastMile {
 							checkOrder = findElementToClick('android.widget.Button','ชำระด้วยเงินสดสำเร็จ')
 							break
 						case 'tmw' :
-						/////////
-						break
+							checkOrder = findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่สำเร็จ')
+							break
 					}
 					break
 				}
@@ -233,12 +242,24 @@ public class KW_LastMile {
 						int x = btnLocation.getX()
 						int y = btnLocation.getY()
 						int width = confirmSignBtn.get(j).getSize().getWidth()
-						x = x + (width)
+						// if page rotate
+//						int width = confirmSignBtn.get(j).getSize().getWidth() / 2
+//						int height = confirmSignBtn.get(j).getSize().getHeight() / 2
+						KeywordUtil.logInfo('x : ' + x)
+						KeywordUtil.logInfo('y : ' + y)
+						KeywordUtil.logInfo('width : ' + width)
+						x = x + width
+//						y = y + height
+						KeywordUtil.logInfo('x2 : ' + x)
+						KeywordUtil.logInfo('y2 : ' + y)
 						swipeUp()
 						Mobile.tapAtPosition(x, y)
 						checkOrder = true
 						break
 					}
+				}
+				if (!checkOrder) {
+					break
 				}
 				checkOrder = findElementToClick('android.widget.Button','ยืนยัน')
 				Mobile.delay(2)
