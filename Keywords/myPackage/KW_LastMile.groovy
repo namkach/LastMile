@@ -215,11 +215,11 @@ public class KW_LastMile {
 					case 'no' :
 					switch (user_preferred) {
 						case 'cash' :
-							checkOrder = findElementToClick('android.widget.Button','ชำระด้วยเงินสดสำเร็จ')
-							break
+						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยเงินสดสำเร็จ')
+						break
 						case 'tmw' :
-							checkOrder = findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่สำเร็จ')
-							break
+						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่สำเร็จ')
+						break
 					}
 					break
 				}
@@ -243,13 +243,13 @@ public class KW_LastMile {
 						int y = btnLocation.getY()
 						int width = confirmSignBtn.get(j).getSize().getWidth()
 						// if page rotate
-//						int width = confirmSignBtn.get(j).getSize().getWidth() / 2
-//						int height = confirmSignBtn.get(j).getSize().getHeight() / 2
+						//						int width = confirmSignBtn.get(j).getSize().getWidth() / 2
+						//						int height = confirmSignBtn.get(j).getSize().getHeight() / 2
 						KeywordUtil.logInfo('x : ' + x)
 						KeywordUtil.logInfo('y : ' + y)
 						KeywordUtil.logInfo('width : ' + width)
 						x = x + width
-//						y = y + height
+						//						y = y + height
 						KeywordUtil.logInfo('x2 : ' + x)
 						KeywordUtil.logInfo('y2 : ' + y)
 						swipeUp()
