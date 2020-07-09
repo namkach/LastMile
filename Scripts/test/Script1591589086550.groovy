@@ -19,7 +19,7 @@ import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 import internal.GlobalVariable as GlobalVariable
 
-def path = 'D:\\Users\\sunitakac\\Desktop\\apk\\lastMile\\last_mile_v_0.0.9a.apk'
+def path = 'D:\\Users\\sunitakac\\Desktop\\apk\\lastMile\\last_mile_v.1.0.2d.apk'
 def status = ''
 def remark = '-'
 
@@ -35,7 +35,7 @@ double totalPrice = 0.00
 double alltotalPrice = 0.00
 
 try {
-    Mobile.startApplication('D:\\Users\\sunitakac\\Desktop\\apk\\lastMile\\last_mile_v_0.0.9a.apk', true)
+    Mobile.startApplication(path, true)
 
     AppiumDriver<MobileElement> driver = MobileDriverFactory.getDriver()
     Mobile.delay(1)

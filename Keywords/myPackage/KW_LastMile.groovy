@@ -1,5 +1,7 @@
 package myPackage
 
+import java.text.DecimalFormat
+
 import org.openqa.selenium.Point
 
 import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
@@ -66,18 +68,18 @@ public class KW_LastMile {
 				String[] texts = products.get(i).getText().split('\\r?\\n')
 				assert texts[1].contains(store_id)
 				switch (status_id) {
-					case 3 :
+					case 1 :
 						statusOrder = 'จัดของเสร็จแล้ว'
 						break
-					case 4 :
+					case 2 :
+						statusOrder = 'กำลังรับสินค้า'
+						break
+					case 3 :
 						statusOrder = 'กำลังจัดส่ง'
 						break
 					case 5 :
 						statusOrder = 'เสร็จสมบูรณ์'
 						break
-					//					case 6 :
-					//						statusOrder = 'ยกเลิกออเดอร์'
-					//						break
 				}
 				KeywordUtil.logInfo('statusOrder : ' + statusOrder)
 				assert texts[2].contains(statusOrder)
@@ -112,9 +114,9 @@ public class KW_LastMile {
 
 		String[] product
 		double countTotalPrice = 0.00
-		double price
+		def price
 		List<MobileElement> listProducts = driver.findElementsByClassName('android.view.View')
-		total_product = 2
+		total_product = 1
 		for (int i = 0; i < total_product; i++) {
 			KeywordUtil.logInfo('--- product : ' + productName[i])
 			for (int j = 0; j < listProducts.size(); j++) {
@@ -124,7 +126,8 @@ public class KW_LastMile {
 					assert product[0] == productName[i]
 					assert extractInt(product[2]) == productQty[i]
 					price = productUnitPrice[i] * productQty[i]
-					assert product[3] == price.toString()
+					KeywordUtil.logInfo('price : ' + price)
+					assert Double.parseDouble(product[3]) == price
 					countTotalPrice += price
 					break
 				}
@@ -169,13 +172,25 @@ public class KW_LastMile {
 	}
 
 	def confirmBtn(String order_id, Integer status_id, String payment_type, String user_preferred, Double totalPrice) {
-		//		checkOrder = false
 		def cashText = totalPrice.toString()
 		switch (status_id) {
-			case 3 :
+			case 1 :
 				checkOrder = findElementToClick('android.widget.Button','รับรายการคำสั่งซื้อ')
+				if (!checkOrder) {
+					break
+				}
 				break
-			case 4 :
+			case 2 :
+				checkOrder = findElementToClick('android.widget.Button','ตรวจสอบรายการสินค้า')
+				if (!checkOrder) {
+					break
+				}
+				checkOrder = findElementToClick('android.widget.Button','สินค้าถูกต้อง')
+				if (!checkOrder) {
+					break
+				}
+				break
+			case 3 :
 				switch (payment_type) {
 					case 'cod' :
 					switch (user_preferred) {
@@ -204,31 +219,45 @@ public class KW_LastMile {
 						checkOrder = findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
 						break
 						case 'tmw' :
-						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่')
+						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยเงินสดสำเร็จ')
+//						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่')
 						if (!checkOrder) {
 							break
 						}
 						Mobile.delay(10)
-						checkOrder = findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
+//						checkOrder = findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
 						break
 					}
 					case 'no' :
-					switch (user_preferred) {
-						case 'cash' :
-						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยเงินสดสำเร็จ')
-						break
-						case 'tmw' :
-						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่สำเร็จ')
+					checkOrder = findElementToClick('android.widget.Button','ชำระเงินสำเร็จ')
+					if (!checkOrder) {
 						break
 					}
+					//						switch (user_preferred) {
+					//							case 'cash' :
+					//								checkOrder = findElementToClick('android.widget.Button','ชำระด้วยเงินสดสำเร็จ')
+					//								if (!checkOrder) {
+					//									break
+					//								}
+					//								break
+					//							case 'tmw' :
+					//								checkOrder = findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่สำเร็จ')
+					//								if (!checkOrder) {
+					//									break
+					//								}
+					//								break
+					//						}
 					break
 				}
-				checkOrder = findElementToClick('android.view.View','ข้าม')
-				if (!checkOrder) {
-					break
-				}
+			//				checkOrder = findElementToClick('android.view.View','ข้าม')
+			//				if (!checkOrder) {
+			//					break
+			//				}
+
+			// cant find confirm
 				checkOrder = findElementToClick('android.widget.Button','ตกลง')
 				if (!checkOrder) {
+					KeywordUtil.logInfo('ไม่ตกลงงงงงง')
 					break
 				}
 
@@ -242,14 +271,11 @@ public class KW_LastMile {
 						int x = btnLocation.getX()
 						int y = btnLocation.getY()
 						int width = confirmSignBtn.get(j).getSize().getWidth()
-						// if page rotate
-						//						int width = confirmSignBtn.get(j).getSize().getWidth() / 2
-						//						int height = confirmSignBtn.get(j).getSize().getHeight() / 2
+
 						KeywordUtil.logInfo('x : ' + x)
 						KeywordUtil.logInfo('y : ' + y)
 						KeywordUtil.logInfo('width : ' + width)
 						x = x + width
-						//						y = y + height
 						KeywordUtil.logInfo('x2 : ' + x)
 						KeywordUtil.logInfo('y2 : ' + y)
 						swipeUp()
@@ -266,7 +292,11 @@ public class KW_LastMile {
 				break
 		}
 		if (checkOrder) {
-			status_id += 1
+			if (status_id == 3) {
+				status_id = 5
+			} else {
+				status_id += 1
+			}
 			status = ''
 			remark = ''
 		} else {
