@@ -1,7 +1,5 @@
 package myPackage
 
-import java.text.DecimalFormat
-
 import org.openqa.selenium.Point
 
 import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
@@ -116,7 +114,9 @@ public class KW_LastMile {
 		double countTotalPrice = 0.00
 		def price
 		List<MobileElement> listProducts = driver.findElementsByClassName('android.view.View')
-		total_product = 1
+		// ============ //
+		// total_product = 1
+		// ============ //
 		for (int i = 0; i < total_product; i++) {
 			KeywordUtil.logInfo('--- product : ' + productName[i])
 			for (int j = 0; j < listProducts.size(); j++) {
@@ -220,12 +220,12 @@ public class KW_LastMile {
 						break
 						case 'tmw' :
 						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยเงินสดสำเร็จ')
-//						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่')
+						//						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่')
 						if (!checkOrder) {
 							break
 						}
 						Mobile.delay(10)
-//						checkOrder = findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
+						//						checkOrder = findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
 						break
 					}
 					case 'no' :
@@ -254,10 +254,37 @@ public class KW_LastMile {
 			//					break
 			//				}
 
-			// cant find confirm
+				KeywordUtil.logInfo('==== find radio btn')
+				List<MobileElement> destinationType = driver.findElementsByClassName('android.widget.RadioButton')
+				KeywordUtil.logInfo('destination size : ' + destinationType.size())
+
+				destinationType.get(0).click()
+				for (int a = 0; a < destinationType.size(); a++) {
+					KeywordUtil.logInfo('destination : ' + destinationType.get(a).getAttribute('content-desc'))
+					if (destinationType.get(a).getAttribute('content-desc').contains('บ้าน / คอนโด')) {
+						Point radioBtn = destinationType.get(a).getLocation()
+						int x = radioBtn.getX()
+						int y = radioBtn.getY()
+						int width = destinationType.get(a).getSize().getWidth()
+						int height = destinationType.get(a).getSize().getHeight()
+
+						KeywordUtil.logInfo('x : ' + x)
+						KeywordUtil.logInfo('y : ' + y)
+						KeywordUtil.logInfo('width : ' + width)
+						KeywordUtil.logInfo('height : ' + height)
+						x = width / 2 
+						y = y + (height / 2)
+						KeywordUtil.logInfo('x2 : ' + x)
+						KeywordUtil.logInfo('y2 : ' + y)
+						Mobile.tapAtPosition(x, y)
+//						Mobile.sendKeys('test')
+//						destinationType.get(a).press_keycode(a)
+						driver.getKeyboard().sendKeys('test')
+					}
+				}
 				checkOrder = findElementToClick('android.widget.Button','ตกลง')
 				if (!checkOrder) {
-					KeywordUtil.logInfo('ไม่ตกลงงงงงง')
+					KeywordUtil.logInfo('Cannot find text')
 					break
 				}
 

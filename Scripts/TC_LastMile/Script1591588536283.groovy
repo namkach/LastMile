@@ -7,7 +7,7 @@ import com.kms.katalon.core.util.KeywordUtil as KeywordUtil
 import io.appium.java_client.AppiumDriver as AppiumDriver
 import io.appium.java_client.MobileElement as MobileElement
 
-def path = 'D:\\Users\\sunitakac\\Desktop\\apk\\lastMile\\last_mile_v.1.0.2d.apk'
+def path = 'D:\\Users\\sunitakac\\Desktop\\apk\\lastMile\\last_mile_v.1.0.8d.apk'
 def status = ''
 def remark = '-'
 

@@ -20,7 +20,7 @@
          <id>72fa1313-107e-4859-82b6-d5d142c92e5c</id>
          <iterationEntity>
             <iterationType>SPECIFIC</iterationType>
-            <value>20</value>
+            <value>21</value>
          </iterationEntity>
          <testDataId>Data Files/TD_LastMile</testDataId>
       </testDataLink>
@@ -154,8 +154,8 @@
          <combinationType>ONE</combinationType>
          <id>4b6d4c80-51bc-4960-b632-dc21aaad99b7</id>
          <iterationEntity>
-            <iterationType>SPECIFIC</iterationType>
-            <value>16</value>
+            <iterationType>RANGE</iterationType>
+            <value>21-21</value>
          </iterationEntity>
          <testDataId>Data Files/TD_LastMile</testDataId>
       </testDataLink>
