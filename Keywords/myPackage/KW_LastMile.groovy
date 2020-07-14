@@ -173,6 +173,7 @@ public class KW_LastMile {
 
 	def confirmBtn(String order_id, Integer status_id, String payment_type, String user_preferred, Double totalPrice) {
 		def cashText = totalPrice.toString()
+		KeywordUtil.logInfo('cash 1 : ' + cashText)
 		switch (status_id) {
 			case 1 :
 				checkOrder = findElementToClick('android.widget.Button','รับรายการคำสั่งซื้อ')
@@ -202,30 +203,25 @@ public class KW_LastMile {
 						List<MobileElement> cash = driver.findElementsByClassName('android.widget.EditText')
 						for (int j = 0; j < cash.size(); j++) {
 							if (cash.get(j).getText().contains('0.00')) {
-								KeywordUtil.logInfo('cash : ' + cash.get(j).getText())
+								KeywordUtil.logInfo('cash 2 : ' + cash.get(j).getText())
 								cash.get(j).click()
-								Mobile.delay(2)
-
-								int x = Mobile.getDeviceWidth()/2 - 50
-								int y = (Mobile.getDeviceHeight()*(7/8))
-
-								for (int k = 0; k < 4; k++) {
-									Mobile.tapAtPosition(x, y)
-								}
+								KeywordUtil.logInfo('cash 3 : ' + cashText)
+								driver.getKeyboard().sendKeys(cashText)
 								Mobile.pressBack()
 								Mobile.delay(2)
+								break
 							}
 						}
 						checkOrder = findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
 						break
 						case 'tmw' :
 						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยเงินสดสำเร็จ')
-						//						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่')
+//						checkOrder = findElementToClick('android.widget.Button','ชำระด้วยทรูมันนี่')
 						if (!checkOrder) {
 							break
 						}
-						Mobile.delay(10)
-						//						checkOrder = findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
+//						Mobile.delay(10)
+//						checkOrder = findElementToClick('android.widget.Button', 'ดำเนินการต่อ')
 						break
 					}
 					case 'no' :
@@ -277,8 +273,6 @@ public class KW_LastMile {
 						KeywordUtil.logInfo('x2 : ' + x)
 						KeywordUtil.logInfo('y2 : ' + y)
 						Mobile.tapAtPosition(x, y)
-//						Mobile.sendKeys('test')
-//						destinationType.get(a).press_keycode(a)
 						driver.getKeyboard().sendKeys('test')
 					}
 				}

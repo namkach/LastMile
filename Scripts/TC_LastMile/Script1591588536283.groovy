@@ -19,7 +19,7 @@ int countQty = 0
 double countTotalPrice = 0.00
 int statusProduct = 1
 int size = total_product
-double totalPrice = 0.00
+double totalPrice = total_price
 double alltotalPrice = 0.00
 boolean checkElement
 
